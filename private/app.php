@@ -11,7 +11,7 @@ $settings = require "settings.php";
 $app = new \Slim\App($settings);
 
 # Database
-$GLOBALS["db"] = new medoo($settings['database']);
+$db = new medoo($settings['database']);
 
 ## Dependencies
 $container = $app->getContainer();
@@ -47,6 +47,7 @@ $app->add(function($request, $response, $next) {
 });
 
 ## Routes
+# Défaut (root)
 $app->get('/', function ($request, $response) {
 	// Tasks
 	$response->getBody()->write("logged in");	
@@ -60,7 +61,7 @@ $app->group('/user', function () {
 			return $response->withRedirect($this->router->pathFor('root'), 303);
 		}
 		
-		// CSRF
+		// CSRF protection
 		$csrf_name = $request->getAttribute('csrf_name');
 		$csrf_value = $request->getAttribute('csrf_value');
 		
@@ -86,6 +87,10 @@ $app->group('/user', function () {
 		return $response->withRedirect($this->router->pathFor('login'), 303);
 	});
 });
+
+# Task
+
+# Admin
 
 ## Run
 $app->run();
