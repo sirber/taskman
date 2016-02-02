@@ -17,7 +17,7 @@ return [
 		'port' => 3306,
 	 
 		// [optional] Table prefix
-		'prefix' => 'PREFIX_',
+		'prefix' => '',
 	 
 		// driver_option for connection, read more from http://www.php.net/manual/en/pdo.setattribute.php
 		'option' => [
