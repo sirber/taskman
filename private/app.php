@@ -15,11 +15,6 @@ $GLOBALS["db"] = new medoo($settings['database']);
 
 ## Dependencies
 $container = $app->getContainer();
-# database 
-$container['database'] = function ($container) {
-	var_dump($container->get("settings")['database']);
-	return new medoo($container->get("settings")['database']);
-};
 # view renderer (template)
 $container['view'] = function ($container) {
     $view = new \Slim\Views\Twig(__DIR__ . '/templates', [
@@ -39,14 +34,16 @@ $container['view'] = function ($container) {
 $app->add(new \Slim\Csrf\Guard);
 # ACL
 $app->add(function($request, $response, $next) {
+	# Verify login
 	if (!isset($_SESSION['user_id']) && ($request->getUri()->getPath() != "user/login")) {
 		// redirects to login
 		return $response->withRedirect($this->router->pathFor('login'), 303);
 	}
-	else {
-		// process normal route
-		return $next($request, $response);	
-	}	
+	
+	# Verify ACL
+	
+	# Process normal route
+	return $next($request, $response);	
 });
 
 ## Routes
