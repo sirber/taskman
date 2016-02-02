@@ -3,7 +3,8 @@
     "require": {
         "slim/slim": "^3.1",
         "slim/twig-view": "^2.0",
-        "catfan/medoo": "^1.0"
+        "catfan/medoo": "^1.0",
+        "monolog/monolog": "^1.17"
     },
     "authors": [
         {
