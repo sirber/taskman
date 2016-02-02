@@ -10,9 +10,6 @@ session_start();
 $settings = require "settings.php";
 $app = new \Slim\App($settings);
 
-# Database
-$db = new medoo($settings['database']);
-
 ## Dependencies
 $container = $app->getContainer();
 # view renderer (template)
@@ -27,7 +24,10 @@ $container['view'] = function ($container) {
 
     return $view;
 };
-
+# database
+$container['db'] = function ($container) {
+	return new medoo($container->get("database"));
+};
 
 ## Middleware
 # CSRF protection
@@ -72,7 +72,7 @@ $app->group('/user', function () {
 		$args = $request->getParsedBody();
 		
 		// Verify login, if CSRF checks out
-		$datas = $GLOBALS["db"]->select("user", "*", ["username" => $args["username"]]);
+		$datas = $this->db->select("user", "*", ["username" => $args["username"]]);
 		if (isset($datas[0])) {
 			$user = $datas[0];
 			if (password_verify($args["password"], $user["password"])) {
