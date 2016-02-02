@@ -10,6 +10,9 @@ $settings = require "settings.php";
 $app = new \Slim\App($settings);
 session_start();
 
+## Database
+$db = new medoo($settings['database']);
+
 ## Dependencies
 $container = $app->getContainer();
 # view renderer
@@ -26,7 +29,15 @@ $container['view'] = function ($container) {
 };
 
 ## Middleware
+# CSRF protection
 $app->add(new \Slim\Csrf\Guard);
+# ACL
+$app->add(function($request, $response, $next) {
+		
+	$response = $next($request, $response);
+	return $response;
+});
+
 
 ## Routes
 $app->get('/hello/{name}', function (Request $request, Response $response) {
