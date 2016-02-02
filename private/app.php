@@ -26,6 +26,7 @@ $container['view'] = function ($container) {
 };
 
 ## Middleware
+$app->add(new \Slim\Csrf\Guard);
 
 ## Routes
 $app = new \Slim\App;
