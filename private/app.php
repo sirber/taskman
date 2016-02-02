@@ -1,6 +1,6 @@
 <?php
-if (!FROM_PUBLIC)
-	die("fatal error: not from public/index.php");
+if (!defined("FROM_PUBLIC"))
+	die("fatal error: request not from public/index.php");
 
 ## Vendor
 require '../vendor/autoload.php';
