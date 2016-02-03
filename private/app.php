@@ -55,7 +55,7 @@ $app->group('/user', function () {
     
 	$this->get('/login', function ($request, $response) {
 		if (isset($_SESSION['user_id'])) { // already logged in
-			return $response->withRedirect($this->router->pathFor('root'), 303);
+			return $response->withRedirect($this->router->pathFor('task'), 303);
 		}
 		
 		// CSRF protection
