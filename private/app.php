@@ -47,6 +47,11 @@ $app->add(function($request, $response, $next) {
 });
 
 ## Routes
+# Default
+$app->get('/', function ($request, $response) {
+	return $response->withRedirect($this->router->pathFor('task'), 303);
+});
+
 # User
 $app->group('/user', function () {
     $this->map(['GET', 'DELETE', 'POST'], '', function ($request, $response) {
