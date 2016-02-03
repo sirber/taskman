@@ -62,12 +62,8 @@ $app->group('/user', function () {
 		if (isset($_SESSION['user_id'])) { // already logged in
 			return $response->withRedirect($this->router->pathFor('task'), 303);
 		}
-		
-		// CSRF protection
-		$csrf_name = $request->getAttribute('csrf_name');
-		$csrf_value = $request->getAttribute('csrf_value');
-		
-		return $this->view->render($response, 'user_login.html', ['csrf_name' => $csrf_name, 'csrf_value' => $csrf_value]);
+		$data = ['csrf_name' => $request->getAttribute('csrf_name'), 'csrf_value' => $request->getAttribute('csrf_value')];
+		return $this->view->render($response, 'user_login.html', $data);
 	})->setName('login');
 	
 	$this->post('/login', function ($request, $response) {
