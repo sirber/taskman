@@ -47,15 +47,12 @@ $app->add(function($request, $response, $next) {
 });
 
 ## Routes
-# Défaut (root)
-$app->get('/', function ($request, $response) {
-	// Tasks
-	$response->getBody()->write("logged in");	
-	return $response;
-})->setName('root');
-
 # User
 $app->group('/user', function () {
+    $this->map(['GET', 'DELETE', 'POST'], '', function ($request, $response) {
+        // Find, delete, patch or replace user identified by $args['id']
+    })->setName('user');
+    
 	$this->get('/login', function ($request, $response) {
 		if (isset($_SESSION['user_id'])) { // already logged in
 			return $response->withRedirect($this->router->pathFor('root'), 303);
@@ -66,7 +63,7 @@ $app->group('/user', function () {
 		$csrf_value = $request->getAttribute('csrf_value');
 		
 		return $this->view->render($response, 'user_login.html', ['csrf_name' => $csrf_name, 'csrf_value' => $csrf_value]);
-	})->setName('login');	
+	})->setName('login');
 	
 	$this->post('/login', function ($request, $response) {
 		$args = $request->getParsedBody();
@@ -77,20 +74,37 @@ $app->group('/user', function () {
 			$user = $datas[0];
 			if (password_verify($args["password"], $user["password"])) {
 				// wohoo!
-				$_SESSION["user_id"] = $user["id"]; // basic user info
+				$_SESSION["user_id"] = $user["id"]; // basic
+                $_SESSION["user"] = $user; // full
+                
 				session_regenerate_id();	
 				
-				return $response->withRedirect($this->router->pathFor('root'), 303);
+				return $response->withRedirect($this->router->pathFor('task', []), 303);
 			}		
 		}
 		
 		return $response->withRedirect($this->router->pathFor('login'), 303);
 	});
+    
+    $this->get('/logout', function ($request, $response) {
+        session_destroy();
+        return $response->withRedirect($this->router->pathFor('login'), 303);
+    });
 });
 
 # Task
+$app->group('/task', function () {
+    $this->get('', function ($request, $response, $args) {
+        $datas = $this->db->select('task', '*', []);
+        return $this->view->render($response, 'task.html', ['user' => $_SESSION['user'], 'datas' => $datas]);
+    })->setName('task');        
+});
 
 # Admin
+$app->group('/admin', function () {
+    
+    
+});
 
 ## Run
 $app->run();

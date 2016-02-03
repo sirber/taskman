@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Le Stylo Rouge{% endblock %}</title>
+        
+        <script src="{{ base_url() }}/vendor/jquery-2.1.4.min.js"></script>
+        
+        <script src="{{ base_url() }}/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="{{ base_url() }}/vendor/bootstrap/css/bootstrap.min.css" />
+        
+        <link rel="stylesheet" href="{{ base_url() }}/css/default.css" />
+        
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

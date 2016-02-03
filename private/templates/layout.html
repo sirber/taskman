@@ -11,10 +11,38 @@
         
         <link rel="stylesheet" href="{{ base_url() }}/css/default.css" />
         
+        <script src="{{ base_url() }}/js/default.js"></script>
+        
+        <script>
+            var base_url = "{{ base_url() }}";
+        </script>
+        
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        
+        <div class="row" style="">
+            <div class="col-md-2 col-sm-3" style="border-right: 1px #EEE solid;">
+                {% block sidebar %}
+                <p><img src="{{ base_url() }}/img/logo.png"></p>
+                <p style="text-align: center">
+                    {{ user.fullname }}
+                </p>
+                <p style="text-align: center">
+                    <button class="btn btn-default" type="submit" id="user_profile"><span class="glyphicon glyphicon-user"></span></button>&nbsp;
+                    <button class="btn btn-default" type="submit" id="user_profile"><span class="glyphicon glyphicon-cog"></span></button>&nbsp;
+                    <button class="btn btn-default" type="submit" id="user_logout"><span class="glyphicon glyphicon-log-out"></span></button>
+                </p>
+                <hr>
+                <button class="btn btn-primary btn-lg btn-block">Tâches</button>
+                <button class="btn btn-default btn-lg btn-block">Forfaits</button>
+                {% endblock %}
+            </div>
+            <div class="col-md-9 col-sm-10">
+                {% block body %}
+                {% endblock %}
+        </div>
+        
         {% block javascripts %}{% endblock %}
     </body>
 </html>
