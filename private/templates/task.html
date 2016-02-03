@@ -12,6 +12,8 @@
             <th>Nom</th>
             <th style="width: 160px;">Date début</th>
             <th style="width: 160px;">Date fin</th>
+            <th style="width: 160px;">Heure estimé</th>
+            <th style="width: 160px;">Heure réel</th>
             <th style="width: 160px;">Action</th>
         </tr>
     </thead>
@@ -24,6 +26,8 @@
             <td>{{ data.name }}</td>
             <td>{{ data.date_start }}</td>
             <td>{{ data.date_end }}</td>
+            <td>{{ data.nb_hour_estimated }}</td>
+            <td>{{ data.nb_hour_real }}</td>
             <td>
                 <button class="btn btn-xs"><span class="glyphicon glyphicon-edit"></span></button>
                 <button class="btn btn-xs"><span class="glyphicon glyphicon-trash"></span></button>
