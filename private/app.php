@@ -47,6 +47,11 @@ $app->add(function($request, $response, $next) {
 });
 
 ## Routes
+# Default
+$app->get('/', function ($request, $response) {
+	return $response->withRedirect($this->router->pathFor('task'), 303);
+});
+
 # User
 $app->group('/user', function () {
     $this->map(['GET', 'DELETE', 'POST'], '', function ($request, $response) {
@@ -55,14 +60,10 @@ $app->group('/user', function () {
     
 	$this->get('/login', function ($request, $response) {
 		if (isset($_SESSION['user_id'])) { // already logged in
-			return $response->withRedirect($this->router->pathFor('root'), 303);
+			return $response->withRedirect($this->router->pathFor('task'), 303);
 		}
-		
-		// CSRF protection
-		$csrf_name = $request->getAttribute('csrf_name');
-		$csrf_value = $request->getAttribute('csrf_value');
-		
-		return $this->view->render($response, 'user_login.html', ['csrf_name' => $csrf_name, 'csrf_value' => $csrf_value]);
+		$data = ['csrf_name' => $request->getAttribute('csrf_name'), 'csrf_value' => $request->getAttribute('csrf_value')];
+		return $this->view->render($response, 'user_login.html', $data);
 	})->setName('login');
 	
 	$this->post('/login', function ($request, $response) {
