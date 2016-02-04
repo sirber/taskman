@@ -35,7 +35,7 @@ $app->add(new \Slim\Csrf\Guard);
 $app->add(function($request, $response, $next) {
 	# Verify login
 	$route = trim($request->getUri()->getPath(), "/");
-	if ($request->getUri()->getPath() != $route) {
+	if ($route != 'user/login') {
 		if (!isset($_SESSION['user_id'])) {
 			// redirects to login
 			return $response->withRedirect($this->router->pathFor('user-login'), 303);
