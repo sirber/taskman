@@ -35,14 +35,16 @@ $app->add(new \Slim\Csrf\Guard);
 # ACL
 $app->add(function($request, $response, $next) {
 	# Verify login
-	if (!isset($_SESSION['user_id']) && ($request->getUri()->getPath() != "user/login")) {
-		// redirects to login
-		return $response->withRedirect($this->router->pathFor('login'), 303);
-	}
-	else {
-		// refresh user info
-		$datas = $this->db->select("user", "*", ["id" => $_SESSION["user_id"]]);
-		$_SESSION["user"] = $datas[0];
+	if ($request->getUri()->getPath() != "user/login") {
+		if (!isset($_SESSION['user_id'])) {
+			// redirects to login
+			return $response->withRedirect($this->router->pathFor('login'), 303);
+		}
+		else {
+			// refresh user info
+			$datas = $this->db->select("user", "*", ["id" => $_SESSION["user_id"]]);
+			$_SESSION["user"] = $datas[0];
+		}
 	}
 	
 	# Add user info to template
