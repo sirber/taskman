@@ -20,26 +20,38 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        <div class="row" style="">
-            <div class="col-md-2 col-sm-4" style="border-right: 1px #EEE solid;">
+        <div class="row">
+            <div class="col-md-2 col-sm-4">
                 {% block sidebar %}
-                <p style="overflow: hidden"><img src="{{ base_url() }}/img/logo.png"></p>
-                <p style="text-align: center">
-                    {{ user.fullname }}
-                </p>
-                <p style="text-align: center">
-                    <button class="btn btn-default" type="submit" id="user_profile"><span class="glyphicon glyphicon-user"></span></button>&nbsp;
-                    <button class="btn btn-default" type="submit" id="user_profile"><span class="glyphicon glyphicon-cog"></span></button>&nbsp;
-                    <button class="btn btn-default" type="submit" id="user_logout"><span class="glyphicon glyphicon-log-out"></span></button>
-                </p>
-                <hr>
-                <button class="btn btn-primary btn-lg btn-block">Tâches</button>
-                <button class="btn btn-default btn-lg btn-block">Forfaits</button>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<p style="overflow: hidden; text-align: center"><img src="{{ base_url() }}/img/logo_carre.png"></p>
+						<p style="text-align: center">
+							{{ user.fullname }}
+						</p>
+						<p style="text-align: center">
+							<button class="btn btn-default" type="submit" id="user_profile"><span class="glyphicon glyphicon-user"></span></button>&nbsp;
+							<button class="btn btn-default" type="submit" id="user_profile"><span class="glyphicon glyphicon-cog"></span></button>&nbsp;
+							<button class="btn btn-default" type="submit" id="user_logout"><span class="glyphicon glyphicon-log-out"></span></button>
+						</p>
+					</div> 
+					<div class="panel-body">
+						<button class="btn btn-primary btn-lg btn-block">Tâches</button>
+						<button class="btn btn-default btn-lg btn-block">Clients</button>						
+					</div>
+				</div>      
                 {% endblock %}
             </div>
             <div class="col-md-10 col-sm-8">
-                {% block body %}
-                {% endblock %}
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">{% block bodytitle %}{% endblock %}</h3>
+					</div>
+					<div class="panel-body">
+						{% block body %}
+						{% endblock %}
+					</div>
+				</div>
         </div>
         
         {% block javascripts %}{% endblock %}
