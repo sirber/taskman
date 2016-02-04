@@ -34,7 +34,8 @@ $app->add(new \Slim\Csrf\Guard);
 # ACL
 $app->add(function($request, $response, $next) {
 	# Verify login
-	if ($request->getUri()->getPath() != "user/login") {
+	$route = trim($request->getUri()->getPath(), "/");
+	if ($request->getUri()->getPath() != $route) {
 		if (!isset($_SESSION['user_id'])) {
 			// redirects to login
 			return $response->withRedirect($this->router->pathFor('user-login'), 303);
@@ -75,7 +76,7 @@ $app->group('/user', function () {
     
 	$this->get('/login', function ($request, $response) {
 		if (isset($_SESSION['user_id'])) { // already logged in
-			return $response->withRedirect($this->router->pathFor('task'), 303);
+			return $response->withRedirect($this->router->pathFor('task-list'), 303);
 		}
 		$data = ['csrf_name' => $request->getAttribute('csrf_name'), 'csrf_value' => $request->getAttribute('csrf_value')];
 		return $this->view->render($response, 'user_login.html', $data);
