@@ -21,7 +21,6 @@ $container['view'] = function ($container) {
         $container['router'],
         $container['request']->getUri()
     ));
-
     return $view;
 };
 # database
@@ -84,20 +83,15 @@ $app->group('/user', function () {
 	
 	$this->post('/login', function ($request, $response) {
 		$args = $request->getParsedBody();
-		
-		// Verify login, if CSRF checks out
 		$datas = $this->db->select("user", "*", ["username" => $args["username"]]);
 		if (isset($datas[0])) {
 			$user = $datas[0];
 			if (password_verify($args["password"], $user["password"])) {
-				// wohoo!
+				session_regenerate_id(); // session security
 				$_SESSION["user_id"] = $user["id"]; // basic
-                
-				session_regenerate_id();					
 				return $response->withRedirect($this->router->pathFor('task-list', []), 303);
 			}		
-		}
-		
+		}		
 		return $response->withRedirect($this->router->pathFor('user-login'), 303);
 	});
     
