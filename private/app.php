@@ -37,7 +37,7 @@ $app->add(function($request, $response, $next) {
 	if ($request->getUri()->getPath() != "user/login") {
 		if (!isset($_SESSION['user_id'])) {
 			// redirects to login
-			return $response->withRedirect($this->router->pathFor('login'), 303);
+			return $response->withRedirect($this->router->pathFor('user-login'), 303);
 		}
 		else {
 			// refresh user info
@@ -58,7 +58,7 @@ $app->add(function($request, $response, $next) {
 ## Routes
 # Default
 $app->get('/', function ($request, $response) {
-	return $response->withRedirect($this->router->pathFor('task'), 303);
+	return $response->withRedirect($this->router->pathFor('task-list'), 303);
 });
 
 # User
