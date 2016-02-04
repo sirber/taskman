@@ -64,10 +64,15 @@ $app->get('/', function ($request, $response) {
 
 # User
 $app->group('/user', function () {
+	$this->get('/list', function ($request, $response, $args) {
+		$datas = $this->db->select("user", "*", []);
+		return $this->view->render($response, 'user_list.html', $datas);
+	})->setName("user-list");
+	
 	$this->get('/view/{id}', function ($request, $response, $args) {
-		// user profile
+		$datas = $this->db->select("user", "*", ['id' => $args["id"]]);
 		return $this->view->render($response, 'user.html', []);
-	})->setName("user");
+	})->setName("user-view");
     
 	$this->get('/login', function ($request, $response) {
 		if (isset($_SESSION['user_id'])) { // already logged in
@@ -75,7 +80,7 @@ $app->group('/user', function () {
 		}
 		$data = ['csrf_name' => $request->getAttribute('csrf_name'), 'csrf_value' => $request->getAttribute('csrf_value')];
 		return $this->view->render($response, 'user_login.html', $data);
-	})->setName('login');
+	})->setName('user-login');
 	
 	$this->post('/login', function ($request, $response) {
 		$args = $request->getParsedBody();
@@ -89,25 +94,25 @@ $app->group('/user', function () {
 				$_SESSION["user_id"] = $user["id"]; // basic
                 
 				session_regenerate_id();					
-				return $response->withRedirect($this->router->pathFor('task', []), 303);
+				return $response->withRedirect($this->router->pathFor('task-list', []), 303);
 			}		
 		}
 		
-		return $response->withRedirect($this->router->pathFor('login'), 303);
+		return $response->withRedirect($this->router->pathFor('user-login'), 303);
 	});
     
     $this->get('/logout', function ($request, $response) {
         session_destroy();
-        return $response->withRedirect($this->router->pathFor('login'), 303);
+        return $response->withRedirect($this->router->pathFor('user-login'), 303);
     });
 });
 
 # Task
 $app->group('/task', function () {
-    $this->get('', function ($request, $response, $args) {
+    $this->get('/list', function ($request, $response, $args) {
         $datas = $this->db->select('task', '*', []);
-        return $this->view->render($response, 'task.html', ['datas' => $datas]);
-    })->setName('task');        
+        return $this->view->render($response, 'task_list.html', ['datas' => $datas]);
+    })->setName('task-list');        
 });
 
 # Admin
