@@ -64,9 +64,10 @@ $app->get('/', function ($request, $response) {
 
 # User
 $app->group('/user', function () {
-    $this->map(['GET', 'DELETE', 'POST'], '', function ($request, $response) {
-        // Find, delete, patch or replace user identified by $args['id']
-    })->setName('user');
+	$this->get('/view/{id}', function ($request, $response, $args) {
+		// user profile
+		return $this->view->render($response, 'user.html', []);
+	})->setName("user");
     
 	$this->get('/login', function ($request, $response) {
 		if (isset($_SESSION['user_id'])) { // already logged in

@@ -15,6 +15,7 @@
         
         <script>
             var base_url = "{{ base_url() }}";
+			var user_id = "{{ user.id }}";
         </script>
         
         {% block stylesheets %}{% endblock %}
@@ -32,7 +33,7 @@
 						</p>
 						<p style="text-align: center">
 							<button class="btn btn-default" type="submit" id="user_profile"><span class="glyphicon glyphicon-user"></span></button>&nbsp;
-							<button class="btn btn-default" type="submit" id="user_profile"><span class="glyphicon glyphicon-cog"></span></button>&nbsp;
+							<button class="btn btn-default" type="submit" id="admin"><span class="glyphicon glyphicon-cog"></span></button>&nbsp;
 							<button class="btn btn-default" type="submit" id="user_logout"><span class="glyphicon glyphicon-log-out"></span></button>
 						</p>
 					</div> 
