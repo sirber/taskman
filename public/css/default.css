@@ -1,6 +1,6 @@
 body {
-    padding: 2px;
+    padding: 16px;
 	margin: 0px;
-	overflow: hidden;
-    
+	background: url(../img/background1.jpg) no-repeat center center fixed;
+	background-size: cover;
 }

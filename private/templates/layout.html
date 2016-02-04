@@ -20,8 +20,9 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+	<div class="container">
         <div class="row">
-            <div class="col-md-2 col-sm-4">
+            <div class="col-lg-3 col-md-3 col-sm-4">
                 {% block sidebar %}
 				<div class="panel panel-default">
 					<div class="panel-heading">
@@ -42,7 +43,7 @@
 				</div>      
                 {% endblock %}
             </div>
-            <div class="col-md-10 col-sm-8">
+            <div class="col-lg-9 col-md-9 col-sm-8">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title">{% block bodytitle %}{% endblock %}</h3>
@@ -53,7 +54,8 @@
 					</div>
 				</div>
         </div>
-        
-        {% block javascripts %}{% endblock %}
+	</div>
+	
+	{% block javascripts %}{% endblock %}
     </body>
 </html>
