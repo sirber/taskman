@@ -43,12 +43,12 @@ $app->add(function($request, $response, $next) {
 		else {
 			// refresh user info
 			$datas = $this->db->select("user", "*", ["id" => $_SESSION["user_id"]]);
+			# session
 			$_SESSION["user"] = $datas[0];
+			# Add user info to templates
+			$this->view->offsetSet('user', $datas[0]);
 		}
 	}
-	
-	# Add user info to template
-	$this->view->offsetSet('user', $_SESSION["user"]);
 	
 	# Verify ACL
 	
