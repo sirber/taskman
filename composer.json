@@ -1,10 +1,12 @@
 {
     "name": "sirber/app.stylorouge.ca",
     "require": {
+		"php" : "^5.5 || ^7.0",
         "slim/slim": "^3.1",
         "slim/twig-view": "^2.0",
         "catfan/medoo": "^1.0",
-        "slim/csrf": "^0.6.0"
+        "slim/csrf": "^0.6.0",
+        "ext-pdo_mysql": "^1.0"
     },
     "authors": [
         {
