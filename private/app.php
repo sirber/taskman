@@ -74,6 +74,10 @@ $app->group('/user', function () {
 		return $this->view->render($response, 'user.html', []);
 	})->setName("user-view");
     
+    $this->post('/view/{id}', function ($request, $response, $args) {
+		# todo
+	})->setName("user-view");
+    
 	$this->get('/login', function ($request, $response) {
 		if (isset($_SESSION['user_id'])) { // already logged in
 			return $response->withRedirect($this->router->pathFor('task-list'), 303);
@@ -108,12 +112,17 @@ $app->group('/task', function () {
         $datas = $this->db->select('task', '*', []);
         return $this->view->render($response, 'task_list.html', ['datas' => $datas]);
     })->setName('task-list');        
+    
+    $this->get('/view/{id}', function ($request, $response, $args) {
+        $datas = $this->db->select('task', '*', []);
+        return $this->view->render($response, 'task_list.html', ['datas' => $datas]);
+    })->setName('task-view');        
+    
 });
 
 # Admin
 $app->group('/admin', function () {
-    
-    
+    # todo    
 });
 
 ## Run
