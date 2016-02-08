@@ -30,6 +30,10 @@
 
                     <button class="btn btn-default" type="submit">login</button>&nbsp;
                     <!--<button class="btn btn-default" type="button">register</button>-->
+					
+					{% if error %}
+					<p class="error">{{ error }}</p>
+					{% endif %}
                 </form>
                 
             </div>

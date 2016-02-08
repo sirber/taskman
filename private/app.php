@@ -51,6 +51,7 @@ $app->add(function($request, $response, $next) {
 	}
 	
 	# Verify ACL
+	## todo
 	
 	# Process normal route
 	return $next($request, $response);	
@@ -69,16 +70,29 @@ $app->group('/user', function () {
 		return $this->view->render($response, 'user_list.html', $datas);
 	})->setName("user-list");
 	
-	$this->get('/view/{id}', function ($request, $response, $args) {
+	$this->map(['GET', 'POST'], '/view/{id}', function ($request, $response, $args) {
+		if ($request->isPost()) {
+			#todo
+		}
 		$datas = $this->db->select("user", "*", ['id' => $args["id"]]);
 		return $this->view->render($response, 'user.html', []);
 	})->setName("user-view");
-    
-    $this->post('/view/{id}', function ($request, $response, $args) {
-		# todo
-	})->setName("user-view");
-    
-	$this->get('/login', function ($request, $response) {
+      
+	$this->map(['GET', 'POST'], '/login', function ($request, $response) {
+		if ($request->isPost()) {
+			$args = $request->getParsedBody();
+			$datas = $this->db->select("user", "*", ["username" => $args["username"]]);
+			if (isset($datas[0])) {
+				$user = $datas[0];
+				if (password_verify($args["password"], $user["password"])) {
+					session_regenerate_id(); // session security
+					$_SESSION["user_id"] = $user["id"]; // basic
+					return $response->withRedirect($this->router->pathFor('task-list', []), 303);
+				}		
+			}	
+			$this->view->offsetSet('error', 'error: user not found');
+		}		
+		
 		if (isset($_SESSION['user_id'])) { // already logged in
 			return $response->withRedirect($this->router->pathFor('task-list'), 303);
 		}
@@ -86,20 +100,6 @@ $app->group('/user', function () {
 		return $this->view->render($response, 'user_login.html', $data);
 	})->setName('user-login');
 	
-	$this->post('/login', function ($request, $response) {
-		$args = $request->getParsedBody();
-		$datas = $this->db->select("user", "*", ["username" => $args["username"]]);
-		if (isset($datas[0])) {
-			$user = $datas[0];
-			if (password_verify($args["password"], $user["password"])) {
-				session_regenerate_id(); // session security
-				$_SESSION["user_id"] = $user["id"]; // basic
-				return $response->withRedirect($this->router->pathFor('task-list', []), 303);
-			}		
-		}		
-		return $response->withRedirect($this->router->pathFor('user-login'), 303);
-	});
-    
     $this->get('/logout', function ($request, $response) {
         session_destroy();
         return $response->withRedirect($this->router->pathFor('user-login'), 303);
@@ -113,7 +113,10 @@ $app->group('/task', function () {
         return $this->view->render($response, 'task_list.html', ['datas' => $datas]);
     })->setName('task-list');        
     
-    $this->get('/view/{id}', function ($request, $response, $args) {
+    $this->map(['GET', 'POST'], '/view/{id}', function ($request, $response, $args) {
+		if ($request->isPost()) {
+			#todo
+		}		
         $datas = $this->db->select('task', '*', []);
         return $this->view->render($response, 'task_list.html', ['datas' => $datas]);
     })->setName('task-view');        
