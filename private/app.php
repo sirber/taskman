@@ -120,6 +120,9 @@ $app->group('/task', function () {
         $datas = array();
         if (isset($args["id"])) {
             $datas = $this->db->select('task', '*', ["id" => $args["id"]]);
+            if (!count($datas)) {
+                return $response->withRedirect($this->router->pathFor('404'), 404);
+            }
         }
         $datas['csrf_name'] = $request->getAttribute('csrf_name');
         $datas['csrf_value'] = $request->getAttribute('csrf_value');
@@ -130,6 +133,10 @@ $app->group('/task', function () {
 });
 
 # Admin
+$app->get('/404', function ($request, $response, $args) {
+    return $this->view->render($response, 'layout_404.html');
+})->setName('404'); ;
+
 $app->group('/admin', function () {
     # todo    
 });
