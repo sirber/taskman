@@ -49,7 +49,7 @@ $app->add(function($request, $response, $next) {
 			$this->view->offsetSet('user', $datas[0]);
 		}
 	}
-	
+
 	# Verify ACL
 	## todo
 	
@@ -121,7 +121,9 @@ $app->group('/task', function () {
         if (isset($args["id"])) {
             $datas = $this->db->select('task', '*', ["id" => $args["id"]]);
         }
-        
+        $datas['csrf_name'] = $request->getAttribute('csrf_name');
+        $datas['csrf_value'] = $request->getAttribute('csrf_value');
+
         return $this->view->render($response, 'task_view.html', ['datas' => $datas]);
     })->setName('task-view');        
     

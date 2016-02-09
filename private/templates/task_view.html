@@ -26,6 +26,16 @@
             </div>            
         </div>
     </div>
+    
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: right;">
+            <button class="btn btn-primary btn-lg" type="submit">Enregistrer</button>&nbsp;
+            <a class="btn btn-default btn-lg" href="{{ base_url() }}/task/list">Retour</a>
+        </div>
+    </div>
+    
+    <input type="hidden" name="csrf_name" value="{{ datas.csrf_name }}">
+	<input type="hidden" name="csrf_value" value="{{ datas.csrf_value }}">
 </form>
 {% endblock %}
 
