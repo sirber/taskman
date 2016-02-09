@@ -1,0 +1,21 @@
+<div class="row panel panel-default">
+    <div class="col-xs-6 col-sm-12 col-md-12 col-lg-12">
+        <p style="overflow: hidden; text-align: center"><img src="{{ base_url() }}/img/logo_carre.png"></p>
+    </div> 
+    <div class="col-xs-6 col-sm-12 col-md-12 col-lg-12" style="vertical-align: center;">            
+        <p style="text-align: center">{{ user.fullname }}</p>
+        <p style="text-align: center">
+            <button class="btn btn-default" type="submit" id="user_profile"><span class="glyphicon glyphicon-user"></span></button>&nbsp;
+            <button class="btn btn-default" type="submit" id="admin"><span class="glyphicon glyphicon-cog"></span></button>&nbsp;
+            <button class="btn btn-default" type="submit" id="user_logout"><span class="glyphicon glyphicon-log-out"></span></button>
+        </p>
+    </div>
+</div>
+<div class="row panel panel-default">
+    <div class="panel-body col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <ul class="nav nav-pills nav-stacked">
+            <li class="active"><a href="{{ base_url() }}/task/list">Tâches</a></li>
+            <li><a href="{{ base_url() }}/client/list">Clients</a></li>
+        </ul>
+    </div>
+</div>

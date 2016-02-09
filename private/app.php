@@ -116,9 +116,13 @@ $app->group('/task', function () {
     $this->map(['GET', 'POST'], '/view/{id}', function ($request, $response, $args) {
 		if ($request->isPost()) {
 			#todo
-		}		
-        $datas = $this->db->select('task', '*', []);
-        return $this->view->render($response, 'task_list.html', ['datas' => $datas]);
+		}
+        $datas = array();
+        if (isset($args["id"])) {
+            $datas = $this->db->select('task', '*', ["id" => $args["id"]]);
+        }
+        
+        return $this->view->render($response, 'task_view.html', ['datas' => $datas]);
     })->setName('task-view');        
     
 });

@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block bodytitle %}Tâche {{datas[0].name}}{% endblock %}
+
+{% block body %}
+<form method="post">
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="name">Nom:</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{datas[0].name}}" />
+            </div>
+            <div class="form-group">
+                <label for="name">Date de début:</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{datas[0].date_start}}" />
+            </div>
+            <div class="form-group">
+                <label for="name">Date de fin:</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{datas[0].date_end}}" />
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="notes">Notes:</label><br>
+                <textarea style="width: 100%" rows="12" id="notes" name="notes"></textarea>
+            </div>            
+        </div>
+    </div>
+</form>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

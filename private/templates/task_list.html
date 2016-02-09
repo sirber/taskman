@@ -27,7 +27,7 @@
             <td>{{ data.nb_hour_estimated }}</td>
             <td>{{ data.nb_hour_real }}</td>
             <td>
-                <button class="btn btn-xs"><span class="glyphicon glyphicon-edit"></span></button>
+                <button class="btn btn-xs"><a href="{{ base_url() }}/task/view/{{ data.id }}"><span class="glyphicon glyphicon-edit"></span></a></button>
                 <button class="btn btn-xs"><span class="glyphicon glyphicon-trash"></span></button>
             </td>
         </tr>
