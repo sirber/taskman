@@ -29,8 +29,6 @@ $container['db'] = function ($container) {
 };
 
 ## Middleware
-# CSRF protection
-$app->add(new \Slim\Csrf\Guard);
 # ACL
 $app->add(function($request, $response, $next) {
 	# Verify login
@@ -49,6 +47,10 @@ $app->add(function($request, $response, $next) {
 			$this->view->offsetSet('user', $datas[0]);
 		}
 	}
+	
+	# CSRF -> view
+	$this->view->offsetSet('csrf_name', $request->getAttribute('csrf_name'));
+	$this->view->offsetSet('csrf_value', $request->getAttribute('csrf_value'));
 
 	# Verify ACL
 	## todo
@@ -56,6 +58,8 @@ $app->add(function($request, $response, $next) {
 	# Process normal route
 	return $next($request, $response);	
 });
+# CSRF protection
+$app->add(new \Slim\Csrf\Guard);
 
 ## Routes
 # Default
@@ -96,8 +100,7 @@ $app->group('/user', function () {
 		if (isset($_SESSION['user_id'])) { // already logged in
 			return $response->withRedirect($this->router->pathFor('task-list'), 303);
 		}
-		$data = ['csrf_name' => $request->getAttribute('csrf_name'), 'csrf_value' => $request->getAttribute('csrf_value')];
-		return $this->view->render($response, 'user_login.html', $data);
+		return $this->view->render($response, 'user_login.html');
 	})->setName('user-login');
 	
     $this->get('/logout', function ($request, $response) {
