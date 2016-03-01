@@ -51,6 +51,9 @@ $app->add(function($request, $response, $next) {
 	# CSRF -> view
 	$this->view->offsetSet('csrf_name', $request->getAttribute('csrf_name'));
 	$this->view->offsetSet('csrf_value', $request->getAttribute('csrf_value'));
+	
+	# Controller/Function -> view
+	$this->view->offsetSet('route', $route);
 
 	# Verify ACL
 	## todo
