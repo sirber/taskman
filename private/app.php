@@ -118,7 +118,13 @@ $app->group('/task', function () {
     
     $this->map(['GET', 'POST'], '/view/{id}', function ($request, $response, $args) {
 		if ($request->isPost()) {
-			#todo
+			#save
+			if (isset($args["id"])) {
+				$this->db->update("task", $_POST['fields'], ["id" => $args["id"]]);
+			}
+			else {
+				$this->db->insert("task", $_POST['fields']);
+			}
 		}
         $datas = array();
         if (isset($args["id"])) {
