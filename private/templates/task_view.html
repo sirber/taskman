@@ -1,42 +1,93 @@
 {% extends 'layout.html' %}
 
-{% block bodytitle %}Tâche {{datas[0].name}}{% endblock %}
+{% block bodytitle %}Tâche #{{datas[0].id}}{% endblock %}
 
 {% block body %}
-<form method="post">
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <div class="form-group">
-                <label for="name">Nom:</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{datas[0].name}}" />
-            </div>
-            <div class="form-group">
-                <label for="name">Date de début:</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{datas[0].date_start}}" />
-            </div>
-            <div class="form-group">
-                <label for="name">Date de fin:</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{datas[0].date_end}}" />
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <div class="form-group">
-                <label for="notes">Notes:</label><br>
-                <textarea style="width: 100%" rows="12" id="notes" name="notes"></textarea>
-            </div>            
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: right;">
-            <button class="btn btn-primary btn-lg" type="submit">Enregistrer</button>&nbsp;
-            <a class="btn btn-default btn-lg" href="{{ base_url() }}/task/list">Retour</a>
-        </div>
-    </div>
-    
-    <input type="hidden" name="csrf_name" value="{{ csrf_name }}">
-	<input type="hidden" name="csrf_value" value="{{ csrf_value }}">
-</form>
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+		<div class="form-group">
+			<label for="name">Nom:</label>
+			<input type="text" class="form-control" id="name" name="name" value="{{datas[0].name}}" />
+		</div>
+		<div class="form-group">
+			<label for="name">Catégorie</label>
+			<select class="form-control"></select>
+		</div>
+		<div class="form-group">
+			<label for="name">Date de début:</label>
+			<input type="text" class="form-control" id="name" name="name" value="{{datas[0].date_start}}" />
+		</div>
+		<div class="form-group">
+			<label for="name">Heures estimés:</label>
+			<input type="text" class="form-control" id="name" name="name" value="{{datas[0].nb_hour_estimated}}" />
+		</div>
+	</div>
+	
+	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+		<div class="form-group">
+			<label for="name">Nunéro client:</label>
+			<input type="text" class="form-control" id="name" name="name" value="{{datas[0].client_id}}" readonly />
+		</div>
+		<div class="form-group">
+			<label for="name">Difficulté</label>
+			<select class="form-control"></select>
+		</div>
+		<div class="form-group">
+			<label for="name">Date de fin:</label>
+			<input type="text" class="form-control" id="name" name="name" value="{{datas[0].date_end}}" />
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<button class="btn btn-primary btn-lg" type="submit">Enregistrer</button>&nbsp;
+		<a class="btn btn-default btn-lg" href="{{ base_url() }}/task/list">Retour</a>
+	</div>
+</div>
+{% endblock %}
+
+{% block body_extra %}
+{# Notes #}
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Notes</h3>
+			</div>
+			<textarea style="width: 100%" rows="12" id="notes" name="notes"></textarea>
+		</div>            
+	</div>
+</div>
+
+{# Étapes #}	
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Étapes</h3>
+			</div>
+			<div class="panel-body">
+				todo!
+			</div>
+		</div>
+	</div>
+</div>
+
+{# Facturation #}
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Facturation</h3>
+			</div>
+			<div class="panel-body">
+				todo!
+			</div>
+		</div>
+	</div>
+</div>
+
 {% endblock %}
 
 {% block javascript %}

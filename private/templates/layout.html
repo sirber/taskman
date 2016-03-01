@@ -27,15 +27,21 @@
                 {% block sidebar %}{% include 'layout_sidebar.html' %}{% endblock %}
             </div>
             <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">{% block bodytitle %}{% endblock %}</h3>
+				<form method="post">
+					<input type="hidden" name="csrf_name" value="{{ csrf_name }}">
+					<input type="hidden" name="csrf_value" value="{{ csrf_value }}">
+					
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">{% block bodytitle %}{% endblock %}</h3>
+						</div>
+						<div class="panel-body">
+							
+							{% block body %}{% endblock %}
+						</div>
 					</div>
-					<div class="panel-body">
-						{% block body %}
-						{% endblock %}
-					</div>
-				</div>
+					{% block body_extra %}{% endblock %}
+				</form>
             </div>
         </div>
 	</div>
