@@ -67,11 +67,11 @@ $app->get('/', function ($request, $response) {
 	return $response->withRedirect($this->router->pathFor('task-list'), 303);
 });
 
-# User
+# User / Client
 $app->group('/user', function () {
 	$this->get('/list', function ($request, $response, $args) {
-		$datas = $this->db->select("user", "*", []);
-		return $this->view->render($response, 'user_list.html', $datas);
+		$datas = $this->db->select("user", "*");
+		return $this->view->render($response, 'user_list.html', ['datas' => $datas]);
 	})->setName("user-list");
 	
 	$this->map(['GET', 'POST'], '/view/{id}', function ($request, $response, $args) {
@@ -79,7 +79,7 @@ $app->group('/user', function () {
 			#todo
 		}
 		$datas = $this->db->select("user", "*", ['id' => $args["id"]]);
-		return $this->view->render($response, 'user.html', []);
+		return $this->view->render($response, 'user_view.html', []);
 	})->setName("user-view");
       
 	$this->map(['GET', 'POST'], '/login', function ($request, $response) {
@@ -112,7 +112,7 @@ $app->group('/user', function () {
 # Task
 $app->group('/task', function () {
     $this->get('/list', function ($request, $response, $args) {
-        $datas = $this->db->select('task', '*', []);
+        $datas = $this->db->select('task', '*');
         return $this->view->render($response, 'task_list.html', ['datas' => $datas]);
     })->setName('task-list');        
     

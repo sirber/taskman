@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block bodytitle %}Usagers{% endblock %}
+
+{% block body %}
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width: 20px;"><input type="checkbox" id="check_all"></th>
+            <th>ID</th>
+            <th>Login</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for data in datas %}
+        <tr>
+            <td>
+                <input type="checkbox">
+            </td>
+            <td>{{ data.id }}</td>
+            <td>{{ data.username }}</td>
+            <td>{{ data.fullname }}</td>
+            <td>{{ data.email }}</td>
+            <td>
+                <a href="{{ base_url() }}/user/view/{{ data.id }}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
+                <a href="{{ base_url() }}/user/delete/{{ data.id }}"><span class="glyphicon glyphicon-trash"></span></a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    {% if not datas %}
+    <tfoot>
+        <tr>
+            <td colspan="5" style="text-align: center;"><h4>aucune usagers?!</h4></td>
+        </tr>
+    </tfoot>
+    {% endif %}
+</table>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
