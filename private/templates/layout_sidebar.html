@@ -12,9 +12,9 @@
         </p>
     </div> 
     <div class="panel-body">
-        <ul class="nav nav-pills nav-stacked">
-            <li{% if route matches '#task/#' %} class="active"{% endif %}><a href="{{ base_url() }}/task/list">Tâches</a></li>
-            <li{% if route matches '#user/#' %} class="active"{% endif %}><a href="{{ base_url() }}/user/list">Clients</a></li>
-        </ul>
+		<div class="list-group">
+			<a class="list-group-item {% if route matches '#task/#' %}active{% endif %}" href="{{ base_url() }}/task/list">Tâches</a>
+            <a class="list-group-item {% if route matches '#user/#' %}active{% endif %}" href="{{ base_url() }}/user/list">Clients</a>
+		</div>
     </div>
 </div>
