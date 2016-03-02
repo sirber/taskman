@@ -69,6 +69,9 @@ $app->add(new \Slim\Csrf\Guard);
 $app->get('/', function ($request, $response) {
 	return $response->withRedirect($this->router->pathFor('task-list'), 303);
 });
+$app->get('/about', function ($request, $response) {
+	return $this->view->render($response, 'about.html', []);
+});
 
 # User / Client
 $app->group('/user', function () {
