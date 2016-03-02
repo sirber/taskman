@@ -11,7 +11,12 @@
 		</div>
 		<div class="form-group">
 			<label for="name">Catégorie</label>
-			<select class="form-control"></select>
+			<select class="form-control" name="fields[category_id]">
+                <option></option>
+                {% for category in ref_category %}
+                <option value="{{category.id}}" {% if datas[0].category_id == category.id %}selected{%endif%}>{{category.name_fr}}</option>
+                {% endfor %}
+            </select>
 		</div>
 		<div class="form-group">
 			<label for="name">Date de début:</label>
@@ -20,35 +25,52 @@
 		<div class="form-group">
 			<label for="name">Date de fin:</label>
 			<input type="text" class="form-control" name="fields[date_end]" value="{{datas[0].date_end}}" />
-		</div>		
+		</div>	
+        <div class="form-group">
+			<label for="name">Rémunération (type)</label>
+            <select class="form-control" name="fields[remuneration_type]">
+				<option></option>
+				<option value="1" {% if datas[0].remuneration_type == 1 %}selected{%endif%}>Taux horraire</option>
+				<option value="2" {% if datas[0].remuneration_type == 2 %}selected{%endif%}>Taux fixe</option>
+			</select>
+		</div>        
 	</div>
 	
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 		<div class="form-group">
-			<label for="name">Nunéro client:</label>
-			<input type="text" class="form-control" name="fields[client_id]" value="{{datas[0].client_id}}" readonly />
+			<label for="name">Client:</label>
+            <select class="form-control" name="fields[client_id]">
+                <option></option>
+                {% for user in ref_user %}
+                <option value="{{user.id}}" {% if datas[0].client_id == user.id %}selected{%endif%}>{{user.id}} - {{user.name}}</option>
+                {% endfor %}
+            </select>
 		</div>
 		<div class="form-group">
 			<label for="name">Priorité</label>
-			<select class="form-control">
+			<select class="form-control" name="fields[priority]">
 				<option></option>
-				<option value="1">Bas</option>
-				<option value="2">Moyen</option>
-				<option value="3">Haut</option>
+				<option value="1" {% if datas[0].priority == 1 %}selected{%endif%}>Bas</option>
+				<option value="2" {% if datas[0].priority == 2 %}selected{%endif%}>Moyen</option>
+				<option value="3" {% if datas[0].priority == 3 %}selected{%endif%}>Haut</option>
 			</select>
 		</div>
 		<div class="form-group">
 			<label for="name">Difficulté</label>
-			<select class="form-control">
+			<select class="form-control" name="fields[difficulty]">
 				<option></option>
-				<option value="1">Facile</option>
-				<option value="2">Moyen</option>
-				<option value="3">Difficile</option>
+				<option value="1" {% if datas[0].difficulty == 1 %}selected{%endif%}>Facile</option>
+				<option value="2" {% if datas[0].difficulty == 2 %}selected{%endif%}>Moyen</option>
+				<option value="3" {% if datas[0].difficulty == 3 %}selected{%endif%}>Difficile</option>
 			</select>
 		</div>
 		<div class="form-group">
 			<label for="name">Heures estimés:</label>
 			<input type="text" class="form-control" name="fields[nb_hour_estimated]" value="{{datas[0].nb_hour_estimated}}" />
+		</div>
+        <div class="form-group">
+			<label for="name">Rémunération ($/h ou $)</label>
+			<input type="text" class="form-control" name="fields[remuneration_value]" value="{{datas[0].remuneration_value}}" />
 		</div>
 	</div>
 </div>
@@ -81,7 +103,7 @@
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Étapes</h3>
+				<h3 class="panel-title">Étapes de planification</h3>
 			</div>
 			<div class="panel-body">
 				todo!

@@ -139,7 +139,13 @@ $app->group('/task', function () {
         $datas['csrf_name'] = $request->getAttribute('csrf_name');
         $datas['csrf_value'] = $request->getAttribute('csrf_value');
 
-        return $this->view->render($response, 'task_view.html', ['datas' => $datas]);
+        # Refs
+        $ref_category = $this->db->select('ref_task_category', '*', ['active'=>1]);
+        $ref_user = $this->db->select('user', '*', ['admin'=>0]);
+        
+        return $this->view->render($response, 'task_view.html', 
+            ['datas' => $datas, 'ref_category' => $ref_category,
+            'ref_user' => $ref_user]);
     })->setName('task-view');        
     
 });
