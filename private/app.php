@@ -25,7 +25,9 @@ $container['view'] = function ($container) {
 };
 # database
 $container['db'] = function ($container) {
-	return new medoo($container->get("database"));
+    $db = new medoo($container->get("database"));
+    $db->query("SET sql_mode = 'ANSI'"); # info: mariadb.com/kb/en/mariadb/sql_mode/
+	return $db;
 };
 
 ## Middleware
@@ -118,7 +120,8 @@ $app->group('/user', function () {
 # Task
 $app->group('/task', function () {
     $this->get('/list', function ($request, $response, $args) {
-        $datas = $this->db->select('task', '*');
+        $datas = $this->db->select('task', ["[>]user" => ["user_id" => "id"]], 
+            ['task.id', 'task.name', 'task.date_start', 'task.date_end', 'task.priority', 'user.fullname']);
         return $this->view->render($response, 'task_list.html', ['datas' => $datas]);
     })->setName('task-list');        
     
