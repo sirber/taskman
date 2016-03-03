@@ -106,7 +106,7 @@
 				<h3 class="panel-title">Étapes de planification</h3>
 			</div>
 			<div class="panel-body">
-				<table class="table">
+				<table class="table" id="task_planif">
                     <thead>
                         <tr>
                             <th>Numéro</th>
@@ -126,8 +126,8 @@
                             <td><input type="text" class="form-control"></td>
                             <td><input type="text" class="form-control"></td>
                             <td style="vertical-align: middle;">
-                                <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
-                                <span class="glyphicon glyphicon-remove-circle"></span>                                
+                                <span class="glyphicon glyphicon-plus-sign" id="task_planif_add"></span>&nbsp;
+                                <span class="glyphicon glyphicon-remove-circle" id="task_planif_add_clear"></span>                                
                             </td>
                         </tr>
                     </tfoot>
@@ -145,7 +145,7 @@
 				<h3 class="panel-title">Heures travaillés</h3>
 			</div>
 			<div class="panel-body">
-                <table class="table">
+                <table class="table" id="task_worked_hours">
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -163,8 +163,8 @@
                             <td><input type="text" class="form-control"></td>
                             <td><input type="text" class="form-control"></td>
                             <td style="vertical-align: middle;">
-                                <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
-                                <span class="glyphicon glyphicon-remove-circle"></span>                                
+                                <span class="glyphicon glyphicon-plus-sign" id="task_worked_hours_add"></span>&nbsp;
+                                <span class="glyphicon glyphicon-remove-circle" id="task_worked_hours_add_clear"></span>                                
                             </td>
                         </tr>
                     </tfoot>
@@ -190,5 +190,20 @@
 
 {% endblock %}
 
-{% block javascript %}
+{% block javascripts %}
+$(document).ready(function() {
+    $("#task_planif_add, #task_worked_hours_add").on("click", addNew).css('cursor', 'pointer');
+});
+
+var iRow = 0;
+function addNew(e) {
+    var id = $(this).parents('table').attr('id');
+    var row = $(this).parents("tr").clone();    
+    $(row).find("td:last span:first").remove(); 
+    $(row).find("input").attr("name", id + "[" + iRow + "][" + $(row).find("input").attr("name") + "]");
+    iRow = iRow + 1;
+    
+    $(this).parents("table").find("tbody").append(row);
+    $(this).parents("tr").find('input').val('');
+}
 {% endblock %}
