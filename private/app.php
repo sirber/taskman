@@ -126,25 +126,17 @@ $app->group('/task', function () {
     })->setName('task-list');        
     
     $this->map(['GET', 'POST'], '/view/{id}', function ($request, $response, $args) {
+		# Save?
 		if ($request->isPost()) {
-			#save
-			if (isset($args["id"])) {
-				$this->db->update("task", $_POST['fields'], ["id" => $args["id"]]);
-			}
-			else {
-				$this->db->insert("task", $_POST['fields']);
-			}
+			$this->db->update("task", $_POST['fields'], ["id" => $args["id"]]);
 		}
-        $datas = array();
-        if (isset($args["id"])) {
-            $datas = $this->db->select('task', '*', ["id" => $args["id"]]);
-            if (!count($datas)) {
-                return $response->withRedirect($this->router->pathFor('404'), 404);
-            }
-        }
-        $datas['csrf_name'] = $request->getAttribute('csrf_name');
-        $datas['csrf_value'] = $request->getAttribute('csrf_value');
-
+		
+		# Load
+		$datas = $this->db->select('task', '*', ["id" => $args["id"]]);
+		if (!count($datas)) {
+			return $response->withRedirect($this->router->pathFor('404'), 404);
+		}
+        
         # Refs
         $ref_category = $this->db->select('ref_task_category', '*', ['active'=>1]);
         $ref_user = $this->db->select('user', '*', ['admin'=>0]);
@@ -154,8 +146,22 @@ $app->group('/task', function () {
             'ref_user' => $ref_user]);
     })->setName('task-view');
     
-	$this->get('/new', function ($request, $response, $args) {
-		return $this->view->render($response, 'task_view.html');
+	$this->map(['GET', 'POST'], '/new', function ($request, $response, $args) {
+		if ($request->isPost()) {
+			#save
+			$id = $this->db->insert("task", $_POST['fields']);
+			return $response->withRedirect($this->router->pathFor('task-view', ["id" => $id]), 303);
+		}
+		
+		$datas = [];
+		
+		# Refs
+        $ref_category = $this->db->select('ref_task_category', '*', ['active'=>1]);
+        $ref_user = $this->db->select('user', '*', ['admin'=>0]);
+        
+        return $this->view->render($response, 'task_view.html', 
+            ['datas' => $datas, 'ref_category' => $ref_category,
+            'ref_user' => $ref_user]);
 	})->setName('task-new');
 });
 
