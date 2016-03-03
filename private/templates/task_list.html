@@ -1,6 +1,9 @@
 {% extends 'layout.html' %}
 
-{% block bodytitle %}Tâches{% endblock %}
+{% block bodytitle %}
+Tâches -
+<a href="{{ base_url() }}/task/new">ajouter</a>
+{% endblock %}
 
 {% block body %}
 <table class="table">

@@ -152,8 +152,11 @@ $app->group('/task', function () {
         return $this->view->render($response, 'task_view.html', 
             ['datas' => $datas, 'ref_category' => $ref_category,
             'ref_user' => $ref_user]);
-    })->setName('task-view');        
+    })->setName('task-view');
     
+	$this->get('/new', function ($request, $response, $args) {
+		return $this->view->render($response, 'task_view.html');
+	})->setName('task-new');
 });
 
 # Admin
