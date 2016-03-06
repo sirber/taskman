@@ -106,7 +106,7 @@
 				<h3 class="panel-title">Étapes de planification</h3>
 			</div>
 			<div class="panel-body">
-				<table class="table" id="task_planif">
+				<table class="table" id="task_marker">
                     <thead>
                         <tr>
                             <th>Numéro</th>
@@ -121,10 +121,10 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td><input type="text" class="form-control"></td>
-                            <td><input type="text" class="form-control"></td>
-                            <td><input type="text" class="form-control"></td>
-                            <td><input type="text" class="form-control"></td>
+                            <td><input type="text" name="position" class="form-control"></td>
+                            <td><input type="text" name="name" class="form-control"></td>
+                            <td><input type="text" name="comment" class="form-control"></td>
+                            <td><input type="text" name="nb_hour_estimated" class="form-control"></td>
                             <td style="vertical-align: middle;">
                                 <span class="glyphicon glyphicon-plus-sign" id="task_planif_add"></span>&nbsp;
                                 <span class="glyphicon glyphicon-remove-circle" id="task_planif_add_clear"></span>                                
@@ -145,7 +145,7 @@
 				<h3 class="panel-title">Heures travaillés</h3>
 			</div>
 			<div class="panel-body">
-                <table class="table" id="task_worked_hours">
+                <table class="table" id="task_work">
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -182,7 +182,30 @@
 				<h3 class="panel-title">Facturation</h3>
 			</div>
 			<div class="panel-body">
-				todo!
+				<table class="table" id="task_billing">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Commentaire</th>
+                            <th>Montant</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><input type="text" class="form-control"></td>
+                            <td><input type="text" class="form-control"></td>
+                            <td><input type="text" class="form-control"></td>
+                            <td style="vertical-align: middle;">
+                                <span class="glyphicon glyphicon-plus-sign" id="task_worked_hours_add"></span>&nbsp;
+                                <span class="glyphicon glyphicon-remove-circle" id="task_worked_hours_add_clear"></span>                                
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>			
 			</div>
 		</div>
 	</div>
@@ -200,7 +223,9 @@ function addNew(e) {
     var id = $(this).parents('table').attr('id');
     var row = $(this).parents("tr").clone();    
     $(row).find("td:last span:first").remove(); 
-    $(row).find("input").attr("name", id + "[" + iRow + "][" + $(row).find("input").attr("name") + "]");
+    $(row).find("input").each(function() {
+        $(this).attr("name", id + "[" + iRow + "][" + $(this).attr("name") + "]");
+    });
     iRow = iRow + 1;
     
     $(this).parents("table").find("tbody").append(row);

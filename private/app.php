@@ -134,7 +134,7 @@ $app->group('/task', function () {
 		# Load
 		$datas = $this->db->select('task', '*', ["id" => $args["id"]]);
 		if (!count($datas)) {
-			return $response->withRedirect($this->router->pathFor('404'), 404);
+			return error_404($this, $response);
 		}
         
         # Refs
@@ -147,10 +147,20 @@ $app->group('/task', function () {
     })->setName('task-view');
     
 	$this->map(['GET', 'POST'], '/new', function ($request, $response, $args) {
-		if ($request->isPost()) {
-			#save
-			$id = $this->db->insert("task", $_POST['fields']);
-			return $response->withRedirect($this->router->pathFor('task-view', ["id" => $id]), 303);
+		if ($request->isPost()) { #save!
+			#task
+			$task_id = $this->db->insert("task", $_POST['fields']);
+            
+            #sub tables
+            $aSubTables = ['task_marker', 'task_work', 'task_billing'];
+            foreach ($aSubTables as $sTable) {
+                foreach ($_POST[$sTable] as $elem) {
+                    $elem['task_id'] = $task_id;
+                    $this->db->insert("task_marker", $elem);
+                }    
+            }
+              
+			#return $response->withRedirect($this->router->pathFor('task-view', ["id" => $task_id]), 303);
 		}
 		
 		$datas = [];
@@ -166,13 +176,14 @@ $app->group('/task', function () {
 });
 
 # Admin
-$app->get('/404', function ($request, $response, $args) {
-    return $this->view->render($response, 'layout_404.html');
-})->setName('404'); ;
-
 $app->group('/admin', function () {
     # todo    
 });
+
+# Error 
+function error_404($e, $response) {
+    return $e->view->render($response->withStatus(404), 'layout_404.html');
+}
 
 ## Run
 $app->run();
