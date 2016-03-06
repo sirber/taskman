@@ -117,7 +117,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                    
+                    {% for row in task_marker %}
+                    <tr>
+                        <td><input type="text" value="{{ row.position }}" name="task_marker[{{ loop.index0 }}][position]" class="form-control"></td>
+                        <td><input type="text" value="{{ row.name }}" name="task_marker[{{ loop.index0 }}][name]" class="form-control"></td>
+                        <td><input type="text" value="{{ row.comment }}" name="task_marker[{{ loop.index0 }}][comment]" class="form-control"></td>
+                        <td><input type="text" value="{{ row.nb_hour_estimated }}" name="task_marker[{{ loop.index0 }}][nb_hour_estimated]" class="form-control"></td>
+                        <td style="vertical-align: middle;">
+                            <input type="hidden" name="id" value="{{ row.id }}">
+                            <span class="glyphicon glyphicon-remove-circle" id="task_planif_add_clear"></span>                                
+                        </td>
+                    </tr>
+                    {% endfor %}
                     </tbody>
                     <tfoot>
                         <tr>
@@ -159,9 +170,9 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td><input type="text" class="form-control"></td>
-                            <td><input type="text" class="form-control"></td>
-                            <td><input type="text" class="form-control"></td>
+                            <td><input type="text" name="date" class="form-control"></td>
+                            <td><input type="text" name="comment" class="form-control"></td>
+                            <td><input type="text" name="nb_hour_real" class="form-control"></td>
                             <td style="vertical-align: middle;">
                                 <span class="glyphicon glyphicon-plus-sign" id="task_worked_hours_add"></span>&nbsp;
                                 <span class="glyphicon glyphicon-remove-circle" id="task_worked_hours_add_clear"></span>                                

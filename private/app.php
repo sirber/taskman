@@ -126,41 +126,74 @@ $app->group('/task', function () {
     })->setName('task-list');        
     
     $this->map(['GET', 'POST'], '/view/{id}', function ($request, $response, $args) {
+        $aSubTables = ['task_marker', 'task_work', 'task_billing'];
+        
 		# Save?
 		if ($request->isPost()) {
+            # task, always update
 			$this->db->update("task", $_POST['fields'], ["id" => $args["id"]]);
+            
+            # sub tables, might be update, insert or delete
+            foreach ($aSubTables as $sTable) {
+                if (!isset($_POST[$sTable]))
+                    continue;
+                
+                $aIds = [];
+                foreach ($_POST[$sTable] as $elem) {
+                    $elem['task_id'] = $args["id"];
+                    if (isset($elem['id'])) {
+                        # update
+                        $aIds[] = $elem['id'];
+                        $this->db->update($sTable, $elem, ['id' => $elem['id']]);
+                    }
+                    else {
+                        # insert
+                        $aIds[] = $this->db->insert($sTable, $elem);
+                    }
+                }    
+                
+                # prube extra (deleted) row
+                $this->db->update($sTable, ['active' => 0], ['id[!]' => $aIds]);
+            }            
 		}
 		
 		# Load
-		$datas = $this->db->select('task', '*', ["id" => $args["id"]]);
-		if (!count($datas)) {
+        $aData = [];
+		$aData["datas"] = $this->db->select('task', '*', ["id" => $args["id"]]);
+		if (!count($aData["datas"])) {
 			return error_404($this, $response);
 		}
         
-        # Refs
-        $ref_category = $this->db->select('ref_task_category', '*', ['active'=>1]);
-        $ref_user = $this->db->select('user', '*', ['admin'=>0]);
+        # Sub tables
+        foreach ($aSubTables as $sTable) {
+            $aData[$sTable] = $this->db->select($sTable, '*', ["AND" => ["active" => 1, "task_id" => $args["id"]]]);
+        }
         
-        return $this->view->render($response, 'task_view.html', 
-            ['datas' => $datas, 'ref_category' => $ref_category,
-            'ref_user' => $ref_user]);
+        # Refs
+        $aData["ref_category"] = $this->db->select('ref_task_category', '*', ['active'=>1]);
+        $aData['ref_user'] = $this->db->select('user', '*', ['admin'=>0]);
+        
+        return $this->view->render($response, 'task_view.html', $aData);
     })->setName('task-view');
     
 	$this->map(['GET', 'POST'], '/new', function ($request, $response, $args) {
+        $aSubTables = ['task_marker', 'task_work', 'task_billing'];
 		if ($request->isPost()) { #save!
-			#task
+			#task (new, always insert)
 			$task_id = $this->db->insert("task", $_POST['fields']);
             
-            #sub tables
-            $aSubTables = ['task_marker', 'task_work', 'task_billing'];
+            #sub tables (new, always insert)
             foreach ($aSubTables as $sTable) {
+                if (!isset($_POST[$sTable]))
+                    continue;
+                
                 foreach ($_POST[$sTable] as $elem) {
                     $elem['task_id'] = $task_id;
                     $this->db->insert("task_marker", $elem);
                 }    
             }
               
-			#return $response->withRedirect($this->router->pathFor('task-view', ["id" => $task_id]), 303);
+			return $response->withRedirect($this->router->pathFor('task-view', ["id" => $task_id]), 303);
 		}
 		
 		$datas = [];
