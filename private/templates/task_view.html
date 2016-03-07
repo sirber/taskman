@@ -124,7 +124,7 @@
                         <td><input type="text" value="{{ row.comment }}" name="task_marker[{{ loop.index0 }}][comment]" class="form-control"></td>
                         <td><input type="text" value="{{ row.nb_hour_estimated }}" name="task_marker[{{ loop.index0 }}][nb_hour_estimated]" class="form-control"></td>
                         <td style="vertical-align: middle;">
-                            <input type="hidden" name="id" value="{{ row.id }}">
+                            <input type="hidden" name="task_marker[{{ loop.index0 }}][id]" value="{{ row.id }}">
                             <button type="button" class="btn btn-default glyphicon glyphicon-remove-circle row_del"></span>                                
                         </td>
                     </tr>
@@ -172,7 +172,7 @@
                         <td><input type="text" value="{{ row.comment }}" name="task_work[{{ loop.index0 }}][comment]" class="form-control"></td>
                         <td><input type="text" value="{{ row.nb_hour_real }}" name="task_work[{{ loop.index0 }}][nb_hour_real]" class="form-control"></td>
                         <td style="vertical-align: middle;">
-                            <input type="hidden" name="id" value="{{ row.id }}">
+                            <input type="hidden" name="task_work[{{ loop.index0 }}][id]" value="{{ row.id }}">
                             <button type="button" class="btn btn-default glyphicon glyphicon-remove-circle row_del"></span>                                
                         </td>
                     </tr>
@@ -219,7 +219,7 @@
                         <td><input type="text" value="{{ row.comment }}" name="task_billing[{{ loop.index0 }}][comment]" class="form-control"></td>
                         <td><input type="text" value="{{ row.amount }}" name="task_billing[{{ loop.index0 }}][amount]" class="form-control"></td>
                         <td style="vertical-align: middle;">
-                            <input type="hidden" name="id" value="{{ row.id }}">
+                            <input type="hidden" name="task_billing[{{ loop.index0 }}][id]" value="{{ row.id }}">
                             <button type="button" class="btn btn-default glyphicon glyphicon-remove-circle row_del"></span>                                
                         </td>
                     </tr>

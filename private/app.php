@@ -81,6 +81,10 @@ $app->group('/user', function () {
 		$datas = $this->db->select("user", "*");
 		return $this->view->render($response, 'user_list.html', ['datas' => $datas]);
 	})->setName("user-list");
+    
+    $this->get('/hash/{pass}', function ($request, $response, $args) {
+        return $response->getBody()->write(password_hash($args["pass"], PASSWORD_DEFAULT));
+    });
 	
 	$this->map(['GET', 'POST'], '/view/{id}', function ($request, $response, $args) {
 		if ($request->isPost()) {
@@ -99,6 +103,7 @@ $app->group('/user', function () {
 				if (password_verify($args["password"], $user["password"])) {
 					session_regenerate_id(); // session security
 					$_SESSION["user_id"] = $user["id"]; // basic
+                    $_SESSION["admin"] = $user["admin"]?true:false; // admin
 					return $response->withRedirect($this->router->pathFor('task-list', []), 303);
 				}		
 			}	
@@ -152,7 +157,7 @@ $app->group('/task', function () {
                     }
                 }    
                 
-                # prube extra (deleted) row
+                # prune extra (deleted) row
                 $this->db->update($sTable, ['active' => 0], ['id[!]' => $aIds]);
             }            
 		}
