@@ -4,6 +4,8 @@ return [
         'displayErrorDetails' => true,
     ],
 	
+	'routes' => ['admin', 'user', 'task'],
+	
 	'database' => [
 		// required
 		'database_type' => 'mysql',
