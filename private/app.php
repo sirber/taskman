@@ -31,20 +31,10 @@ $container['db'] = function ($container) {
 };
 # logger
 $container['log'] = function ($container) {
-	/*
-	use Psr\Log\LogLevel;
-
-	// These are in order of highest priority to lowest.
-	LogLevel::EMERGENCY;
-	LogLevel::ALERT;
-	LogLevel::CRITICAL;
-	LogLevel::ERROR;
-	LogLevel::WARNING;
-	LogLevel::NOTICE;
-	LogLevel::INFO;
-	LogLevel::DEBUG;
-	*/
-	
+	/* These are in order of highest priority to lowest.
+	LogLevel::EMERGENCY; LogLevel::ALERT; LogLevel::CRITICAL; LogLevel::ERROR;
+	LogLevel::WARNING; LogLevel::NOTICE; LogLevel::INFO; LogLevel::DEBUG;
+	*/	
 	$log = new Katzgrau\KLogger\Logger(__DIR__.'/logs', LogLevel::NOTICE);
 	return $log;
 };
