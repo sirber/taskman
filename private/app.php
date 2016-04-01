@@ -3,6 +3,7 @@ if (!defined("FROM_PUBLIC"))
 	die("fatal error: request not from public/index.php");
 
 ## Vendor
+use Psr\Log\LogLevel;
 require '../vendor/autoload.php';
 
 ## App
@@ -26,9 +27,26 @@ $container['view'] = function ($container) {
 # database
 $container['db'] = function ($container) {
     $db = new medoo($container->get("database"));
-	#seems to work ok now. medoo is supposed to do it
-    #$db->query("SET sql_mode = 'ANSI'"); # info: mariadb.com/kb/en/mariadb/sql_mode/
 	return $db;
+};
+# logger
+$container['log'] = function ($container) {
+	/*
+	use Psr\Log\LogLevel;
+
+	// These are in order of highest priority to lowest.
+	LogLevel::EMERGENCY;
+	LogLevel::ALERT;
+	LogLevel::CRITICAL;
+	LogLevel::ERROR;
+	LogLevel::WARNING;
+	LogLevel::NOTICE;
+	LogLevel::INFO;
+	LogLevel::DEBUG;
+	*/
+	
+	$log = new Katzgrau\KLogger\Logger(__DIR__.'/logs', LogLevel::NOTICE);
+	return $log;
 };
 
 ## Middleware
@@ -60,6 +78,9 @@ $app->add(function($request, $response, $next) {
 
 	# Verify ACL
 	## todo
+	
+	# Log
+	$this->log->debug($route);
 	
 	# Process normal route
 	return $next($request, $response);	
