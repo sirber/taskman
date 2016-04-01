@@ -13,7 +13,7 @@ $app = new \Slim\App($settings);
 
 ## Dependencies
 $container = $app->getContainer();
-# view renderer (template)
+# template: twig
 $container['view'] = function ($container) {
     $view = new \Slim\Views\Twig(__DIR__ . '/templates', [
         'cache' => false
@@ -24,27 +24,17 @@ $container['view'] = function ($container) {
     ));
     return $view;
 };
-# database
+# database: medoo
 $container['db'] = function ($container) {
     $db = new medoo($container->get("database"));
 	return $db;
 };
-# logger
+# logging: klogger
 $container['log'] = function ($container) {
-	/*
-	use Psr\Log\LogLevel;
-
-	// These are in order of highest priority to lowest.
-	LogLevel::EMERGENCY;
-	LogLevel::ALERT;
-	LogLevel::CRITICAL;
-	LogLevel::ERROR;
-	LogLevel::WARNING;
-	LogLevel::NOTICE;
-	LogLevel::INFO;
-	LogLevel::DEBUG;
-	*/
-	
+	/* These are in order of highest priority to lowest.
+	LogLevel::EMERGENCY; LogLevel::ALERT; LogLevel::CRITICAL; LogLevel::ERROR;
+	LogLevel::WARNING; LogLevel::NOTICE; LogLevel::INFO; LogLevel::DEBUG;
+	*/	
 	$log = new Katzgrau\KLogger\Logger(__DIR__.'/logs', LogLevel::NOTICE);
 	return $log;
 };
