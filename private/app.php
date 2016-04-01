@@ -26,7 +26,8 @@ $container['view'] = function ($container) {
 # database
 $container['db'] = function ($container) {
     $db = new medoo($container->get("database"));
-    $db->query("SET sql_mode = 'ANSI'"); # info: mariadb.com/kb/en/mariadb/sql_mode/
+	#seems to work ok now. medoo is supposed to do it
+    #$db->query("SET sql_mode = 'ANSI'"); # info: mariadb.com/kb/en/mariadb/sql_mode/
 	return $db;
 };
 
