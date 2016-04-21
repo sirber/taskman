@@ -1,7 +1,7 @@
 body {
     padding: 16px;
 	margin: 0px;
-	background: url(../img/background3.webp) no-repeat center center fixed; /* webkit only, screw firefox and internet explorer */
+	background: url(../img/background3o.jpg) no-repeat center center fixed;
 	background-color: #DDD;
 	background-size: cover;
 }
