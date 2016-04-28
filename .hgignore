@@ -1,2 +1,4 @@
 vendor/
 private/settings.php
+private/logs/
+.orig
