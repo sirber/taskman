@@ -1,9 +1,45 @@
 {% extends 'layout.html' %}
 
-{% block bodytitle %}Usager{% endblock %}
+{% block bodytitle %}Usager #{{datas[0].id}}{% endblock %}
 
 {% block body %}
-todo
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+		<div class="form-group">
+			<label for="name">Username:</label>
+			<input type="text" class="form-control" name="fields[username]" value="{{datas[0].username}}" />
+		</div>
+		<div class="form-group">
+			<label for="name">Courriel:</label>
+			<input type="text" class="form-control" name="fields[email]" value="{{datas[0].email}}" />
+		</div>
+		<div class="form-group">
+			<label for="name">Nom:</label>
+			<input type="text" class="form-control" name="fields[fullname]" value="{{datas[0].fullname}}" />
+		</div>
+	</div>
+	
+	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+		<div class="form-group">
+			<label for="name">Actif:</label>
+			<input type="checkbox" class="form-control" name="fields[active]" value="{{datas[0].active}}" />
+		</div>
+		<div class="form-group">
+			<label for="name">Admin:</label>
+			<input type="checkbox" class="form-control" name="fields[admin]" value="{{datas[0].admin}}" />
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<button class="btn btn-danger btn-lg" type="submit">Enregistrer</button>&nbsp;
+		<a class="btn btn-warning btn-lg" href="{{ base_url() }}/task/list">Retour</a>&nbsp;
+		<button class="btn btn-default btn-lg" type="button">Imprimer</button>&nbsp;
+		<button class="btn btn-default btn-lg" type="button">Facture</button>&nbsp;		
+	</div>
+</div>
+
 {% endblock %}
 
 {% block javascripts %}

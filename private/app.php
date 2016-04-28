@@ -1,6 +1,13 @@
 <?php
-if (!defined("FROM_PUBLIC"))
+if (!defined("FROM_PUBLIC")) {
 	die("fatal error: request not from public/index.php");
+}
+if (!is_writable(__DIR__ . "/logs/")) {
+	die("fatal error: folder private/logs is not writable");
+}
+if (!is_file(__DIR__ . "/settings.php")) {
+	die("fatal error: settings.php not found");
+}
 
 ## Vendor
 use Psr\Log\LogLevel;
@@ -26,7 +33,12 @@ $container['view'] = function ($container) {
 };
 # database: medoo
 $container['db'] = function ($container) {
-    $db = new medoo($container->get("database"));
+	try {
+		$db = new medoo($container->get("database"));
+	}
+	catch (Exception $e) {
+		die("fatal error: cannot connect to database.");
+	}
 	return $db;
 };
 # logging: klogger
