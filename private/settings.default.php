@@ -1,11 +1,12 @@
 <?php
 return [
-    'settings' => [
-        'displayErrorDetails' => true,
-    ],
-	
-	'routes' => ['admin', 'user', 'task'],
-	
+	'base' => [
+		'title' => 'TaskMan',
+        'logo' => 'logo.png', /* see public/img/ */
+        'logo_sq' => 'logo_carre.png', /* see public/img/ */
+		'background' => 'background1o-compressor.jpg', /* see public/img/ */
+	],
+    	
 	'database' => [
 		// required
 		'database_type' => 'mysql',
@@ -26,4 +27,8 @@ return [
 			PDO::ATTR_CASE => PDO::CASE_NATURAL
 		]
 	],
+	
+	'settings' => [
+        'displayErrorDetails' => true,
+    ],
 ];

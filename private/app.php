@@ -17,6 +17,7 @@ require '../vendor/autoload.php';
 session_start();
 $settings = require "settings.php";
 $app = new \Slim\App($settings);
+$routes = ['admin', 'user', 'task']; 
 
 ## Dependencies
 $container = $app->getContainer();
@@ -54,9 +55,16 @@ $container['log'] = function ($container) {
 ## Middleware
 # ACL
 $app->add(function($request, $response, $next) {
+	# Config
+	$this->view->offsetSet('title', $this->get('base')['title']);
+    $this->view->offsetSet('background', $this->get('base')['background']);
+    $this->view->offsetSet('logo', $this->get('base')['logo']);
+    $this->view->offsetSet('logo_sq', $this->get('base')['logo_sq']);
+	
 	# Verify login
 	$route = trim($request->getUri()->getPath(), "/");
-	if ($route != 'user/login') {
+    $route_ok = ['user/login', 'default_css'];
+    if (!in_array($route, $route_ok)) {
 		if (!isset($_SESSION['user_id'])) {
 			// redirects to login
 			return $response->withRedirect($this->router->pathFor('user-login'), 303);
@@ -87,23 +95,25 @@ $app->add(function($request, $response, $next) {
 	# Process normal route
 	return $next($request, $response);	
 });
+
 # CSRF protection
 $app->add(new \Slim\Csrf\Guard);
 
 ## Routes
-# Default
 $app->get('/', function ($request, $response) {
 	return $response->withRedirect($this->router->pathFor('task-list'), 303);
 });
 $app->get('/about', function ($request, $response) {
-	return $this->view->render($response, 'about.html', []);
+	return $this->view->render($response, 'about.html');
 });
+$app->get('/default_css', function ($request, $response) {
+    return $this->view->render($response->withHeader('Content-type', 'text/css'), 'default.css');
+});
+
 function error_404($e, $response) {
     return $e->view->render($response->withStatus(404), 'layout_404.html');
 }
-
-# Custom
-foreach ($settings['routes'] as $route) {
+foreach ($routes as $route) {
 	require_once ("routes/" . $route . ".php");
 }
 
