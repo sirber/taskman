@@ -38,10 +38,12 @@ $app->add(function($request, $response, $next) {
 
 # Init
 $app->add(function($request, $response, $next) {
+    $isChrome = stripos($_SERVER['HTTP_USER_AGENT'], 'chrome')?true:false; // for webp, else jpg
+    
     # Template init
     $route = trim($request->getUri()->getPath(), "/");
 	$this->view->offsetSet('title', $this->get('base')['title']);
-    $this->view->offsetSet('background', $this->get('base')['background']);
+    $this->view->offsetSet('background', $this->get('base')['background'] . ($isChrome?'.webp':'.jpg'));
     $this->view->offsetSet('logo', $this->get('base')['logo']);
     $this->view->offsetSet('logo_sq', $this->get('base')['logo_sq']);
 	$this->view->offsetSet('route', $route);

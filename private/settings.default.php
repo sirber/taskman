@@ -4,7 +4,7 @@ return [
 		'title' => 'TaskMan',
         'logo' => 'logo.png', /* see public/img/ */
         'logo_sq' => 'logo_carre.png', /* see public/img/ */
-		'background' => 'background1o-compressor.jpg', /* see public/img/ */
+		'background' => 'background1o', /* see public/img/ , no file extention*/
 	],
     	
 	'database' => [
