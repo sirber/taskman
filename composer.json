@@ -1,7 +1,7 @@
 {
     "name": "sirber/app.stylorouge.ca",
     "require": {
-		"php" : "^5.5 || ^7.0",
+	"php" : "^5.5 || ^7.0",
         "slim/slim": "^3.1",
         "slim/twig-view": "^2.0",
         "catfan/medoo": "^1.0",
