@@ -55,11 +55,8 @@ $container['log'] = function ($container) {
 ## Middleware
 # ACL
 $app->add(function($request, $response, $next) {
-	# Config
-	$this->view->offsetSet('title', $this->get('base')['title']);
-    $this->view->offsetSet('background', $this->get('base')['background']);
-    $this->view->offsetSet('logo', $this->get('base')['logo']);
-    $this->view->offsetSet('logo_sq', $this->get('base')['logo_sq']);
+	# Log
+	$this->log->debug($_SERVER['REMOTE_ADDR'] . ": " . $route);
 	
 	# Verify login
 	$route = trim($request->getUri()->getPath(), "/");
@@ -79,18 +76,17 @@ $app->add(function($request, $response, $next) {
 		}
 	}
 	
-	# CSRF -> view
+	# Template init
+	$this->view->offsetSet('title', $this->get('base')['title']);
+    $this->view->offsetSet('background', $this->get('base')['background']);
+    $this->view->offsetSet('logo', $this->get('base')['logo']);
+    $this->view->offsetSet('logo_sq', $this->get('base')['logo_sq']);
+	$this->view->offsetSet('route', $route);
 	$this->view->offsetSet('csrf_name', $request->getAttribute('csrf_name'));
 	$this->view->offsetSet('csrf_value', $request->getAttribute('csrf_value'));
 	
-	# Controller/Function -> view
-	$this->view->offsetSet('route', $route);
-
 	# Verify ACL
 	## todo
-	
-	# Log
-	$this->log->debug($route);
 	
 	# Process normal route
 	return $next($request, $response);	
