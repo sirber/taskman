@@ -64,6 +64,7 @@ $app->group('/task', function () {
         $aSubTables = ['task_marker', 'task_work', 'task_billing'];
 		if ($request->isPost()) { #save!
 			#task (new, always insert)
+            $_POST['fields']['user_id'] = $_SESSION['user_id'];
 			$task_id = $this->db->insert("task", $_POST['fields']);
             $this->offsetSet("last_insert_id", $task_id);
             
