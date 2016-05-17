@@ -7,7 +7,7 @@ $container = $app->getContainer();
 # template: twig
 $container['view'] = function ($container) {
     $view = new \Slim\Views\Twig(__DIR__ . '/templates', [
-        'cache' => false
+        'cache' => __DIR__ . '/cache/'
     ]);
     $view->addExtension(new \Slim\Views\TwigExtension(
         $container['router'],

@@ -3,3 +3,4 @@ private/settings.php
 private/logs/
 .orig
 composer.lock
+private/cache/
