@@ -30,6 +30,7 @@ $app->add(function($request, $response, $next) {
     # Load uploaded files for current route and add it to the template
     $files = $this->db->select('file', "*", ['AND' => ['route' => $route, 'active' => 1]]);
     $this->view->offsetSet('files', $files);    
+    $this->view->offsetSet('files_show', $id?true:false);
     
 	# Process normal route
 	return $next($request, $response);		
