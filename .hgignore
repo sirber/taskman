@@ -1,6 +1,7 @@
 vendor/
 private/settings.php
 private/logs/
+private/cache/
+private/upload/
 .orig
 composer.lock
-private/cache/
