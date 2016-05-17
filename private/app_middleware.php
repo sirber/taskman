@@ -1,5 +1,6 @@
 <?php
 if (!isset($app)) { die(); }
+use Ikimea\Browser\Browser;
 
 # Files
 $app->add(function($request, $response, $next) {
@@ -38,12 +39,23 @@ $app->add(function($request, $response, $next) {
 
 # Init
 $app->add(function($request, $response, $next) {
-    $isChrome = stripos($_SERVER['HTTP_USER_AGENT'], 'chrome')?true:false; // for webp, else jpg
+    # Detect browser    
+    $browser = new Browser();
+    switch ($browser->getBrowser()) {
+        case Browser::BROWSER_CHROME:
+        case Browser::BROWSER_OPERA:
+            $ext = '.webp'; # save bandwith
+            break; 
+
+        default:
+            $ext = '.jpg';
+            break;
+    }
     
     # Template init
     $route = trim($request->getUri()->getPath(), "/");
 	$this->view->offsetSet('title', $this->get('base')['title']);
-    $this->view->offsetSet('background', $this->get('base')['background'] . ($isChrome?'.webp':'.jpg'));
+    $this->view->offsetSet('background', $this->get('base')['background'] . $ext);
     $this->view->offsetSet('logo', $this->get('base')['logo']);
     $this->view->offsetSet('logo_sq', $this->get('base')['logo_sq']);
 	$this->view->offsetSet('route', $route);
@@ -81,6 +93,9 @@ $app->add(function($request, $response, $next) {
 	return $next($request, $response);		
 });
 
+# CSRF protection
+$app->add(new \Slim\Csrf\Guard);
+
 # Logging
 $app->add(function($request, $response, $next) {
 	# Log
@@ -90,6 +105,3 @@ $app->add(function($request, $response, $next) {
     # Process normal route
 	return $next($request, $response);		
 });
-
-# CSRF protection
-$app->add(new \Slim\Csrf\Guard);

@@ -8,7 +8,7 @@ $app->get('/about', function ($request, $response) {
 	return $this->view->render($response, 'about.html');
 });
 $app->get('/default_css', function ($request, $response) {
-    return $this->view->render($response->withHeader('Content-type', 'text/css'), 'default.css');
+    return $this->view->render($response->withHeader('Content-type', 'text/css'), 'default.css');    
 });
 
 function error_404($e, $response) {
