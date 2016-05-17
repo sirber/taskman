@@ -1,2 +1,2 @@
 @echo off
-composer update
+composer update --optimize-autoloader
