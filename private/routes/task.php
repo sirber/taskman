@@ -65,6 +65,7 @@ $app->group('/task', function () {
 		if ($request->isPost()) { #save!
 			#task (new, always insert)
 			$task_id = $this->db->insert("task", $_POST['fields']);
+            $this->offsetSet("last_insert_id", $task_id);
             
             #sub tables (new, always insert)
             foreach ($aSubTables as $sTable) {

@@ -9,18 +9,24 @@ $app->add(function($request, $response, $next) {
         
     # File upload
     if (count($_FILES)) {				
-		if (!$id) {
+		# New element?
+        if (!$id) {
             # Save current objects
 			$response = $next($request, $response);
             # Fetch new ID
+            $id = $this->get("last_insert_id");
 		}
-		# save upload
-		## todo
+		
+        # Save upload
+        
+        
+		
+        ## todo
 	}
     
-    # Load uploaded files for current route
-    
-    
+    # Load uploaded files for current route and add it to the template
+    $files = $this->db->select('file', "*", ['AND' => ['route' => $route, 'active' => 1]]);
+    $this->view->offsetSet('files', $files);    
     
 	# Process normal route
 	return $next($request, $response);		
