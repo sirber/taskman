@@ -1,19 +1,26 @@
 <?php
-require 'app_check.php';
+if (!isset($app)) { die(); }
 
 # Files
 $app->add(function($request, $response, $next) {
+    # Route check
+    $route = trim($request->getUri()->getPath(), "/");
+    $id = $request->getAttribute('route')->getArgument('id');
+        
     # File upload
-	$upload = count($_FILES);
-	if ($upload) {
-		$route = $request->getAttribute('route');
-		$id = $route->getArgument('id');		
-		if (!isset($id)) {
+    if (count($_FILES)) {				
+		if (!$id) {
+            # Save current objects
 			$response = $next($request, $response);
+            # Fetch new ID
 		}
 		# save upload
 		## todo
 	}
+    
+    # Load uploaded files for current route
+    
+    
     
 	# Process normal route
 	return $next($request, $response);		
@@ -22,6 +29,7 @@ $app->add(function($request, $response, $next) {
 # Init
 $app->add(function($request, $response, $next) {
     # Template init
+    $route = trim($request->getUri()->getPath(), "/");
 	$this->view->offsetSet('title', $this->get('base')['title']);
     $this->view->offsetSet('background', $this->get('base')['background']);
     $this->view->offsetSet('logo', $this->get('base')['logo']);
@@ -64,6 +72,7 @@ $app->add(function($request, $response, $next) {
 # Logging
 $app->add(function($request, $response, $next) {
 	# Log
+    $route = trim($request->getUri()->getPath(), "/");
 	$this->log->debug($_SERVER['REMOTE_ADDR'] . ": " . $route);
     
     # Process normal route

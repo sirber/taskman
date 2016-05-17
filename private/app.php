@@ -9,7 +9,6 @@
 require 'app_check.php';
  
 # Vendor
-use Psr\Log\LogLevel;
 require_once '../vendor/autoload.php';
 
 # Framework

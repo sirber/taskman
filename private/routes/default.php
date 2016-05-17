@@ -1,7 +1,5 @@
 <?php
-if (!defined("FROM_PUBLIC")) {
-	die("fatal error: request not from public/index.php");
-}
+if (!isset($app)) { die(); }
 
 $app->get('/', function ($request, $response) {
 	return $response->withRedirect($this->router->pathFor('task-list'), 303);

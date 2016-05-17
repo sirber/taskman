@@ -1,7 +1,9 @@
 <?php
-require 'app_check.php';
+if (!isset($app)) { die(); }
+use Psr\Log\LogLevel;
 
 $container = $app->getContainer();
+
 # template: twig
 $container['view'] = function ($container) {
     $view = new \Slim\Views\Twig(__DIR__ . '/templates', [
@@ -13,6 +15,7 @@ $container['view'] = function ($container) {
     ));
     return $view;
 };
+
 # database: medoo
 $container['db'] = function ($container) {
 	try {
@@ -23,6 +26,7 @@ $container['db'] = function ($container) {
 	}
 	return $db;
 };
+
 # logging: klogger
 $container['log'] = function ($container) {
 	/* These are in order of highest priority to lowest.
@@ -32,8 +36,3 @@ $container['log'] = function ($container) {
 	$log = new Katzgrau\KLogger\Logger(__DIR__.'/logs', LogLevel::NOTICE);
 	return $log;
 };
-# file manager
-$container['upload'] = function ($container) {
-	## todo
-	return null;
-}
