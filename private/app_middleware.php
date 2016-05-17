@@ -18,10 +18,20 @@ $app->add(function($request, $response, $next) {
 		}
 		
         # Save upload
-        
-        
-		
-        ## todo
+        foreach ($_FILES as $index => $file) {
+            ## todo: get description
+            
+            # Save to the database
+            $data = ['route' => $route, 
+                'filename' => $file['name'],
+                'size' => $file['size'], 
+                'content_type' => $file['type']
+            ];
+            $file_id = $this->db->insert("file", $data);
+            
+            # Keep the file
+            move_uploaded_file($file['tmp_name'], __DIR__ . "/upload/" . $file_id);
+        }
 	}
     
     # Load uploaded files for current route and add it to the template
