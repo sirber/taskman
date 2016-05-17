@@ -51,6 +51,11 @@ $container['log'] = function ($container) {
 	$log = new Katzgrau\KLogger\Logger(__DIR__.'/logs', LogLevel::NOTICE);
 	return $log;
 };
+# file manager
+$container['upload'] = function ($container) {
+	## todo
+	return null;
+}
 
 ## Middleware
 # ACL
@@ -84,12 +89,24 @@ $app->add(function($request, $response, $next) {
 	$this->view->offsetSet('route', $route);
 	$this->view->offsetSet('csrf_name', $request->getAttribute('csrf_name'));
 	$this->view->offsetSet('csrf_value', $request->getAttribute('csrf_value'));
-	
+
 	# Verify ACL
 	## todo
 	
+	# File upload
+	$upload = count($_FILES);
+	if ($upload) {
+		$route = $request->getAttribute('route');
+		$id = $route->getArgument('id');		
+		if (!isset($id)) {
+			$response = $next($request, $response);
+		}
+		# save upload
+		## todo
+	}
+	
 	# Process normal route
-	return $next($request, $response);	
+	return $next($request, $response);		
 });
 
 # CSRF protection
