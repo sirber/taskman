@@ -8,24 +8,17 @@ $app->add(function($request, $response, $next) {
     $id = $request->getAttribute('route')->getArgument('id');
         
     # File upload
-    if (count($_FILES)) {				
-		# New element?
-        if (!$id) {
-            # Save current objects
-			$response = $next($request, $response);
-            # Fetch new ID
-            $id = $this->get("last_insert_id");
-		}
-		
+    if (count($_FILES) && $id) {				
         # Save upload
         foreach ($_FILES as $index => $file) {
-            ## todo: get description
+            ## todo: get description from form/post
             
             # Save to the database
             $data = ['route' => $route, 
                 'filename' => $file['name'],
                 'size' => $file['size'], 
-                'content_type' => $file['type']
+                'content_type' => $file['type'],
+                'description' => 'n/a'
             ];
             $file_id = $this->db->insert("file", $data);
             
