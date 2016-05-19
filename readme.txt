@@ -17,3 +17,10 @@ Installation:
 * Pointer apache vers le répertoire public
 * Activer "AllowOverride all"
 * Vérifier le fichier de configuration (private/settings.php)
+
+
+
+#######
+Todo
+
+task/view/js : rewrite to move the tfoot/tr into the body and clone a new one in the tfoot. might fix the input file issues
