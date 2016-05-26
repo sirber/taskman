@@ -18,6 +18,7 @@ $app->get('/download/{id}', function ($request, $response, $args) {
     
     // Fetch from DB
     $file = $this->db->select("file", "*", ["id" => $args["id"]]);
+    $this->db->update('file', ['nb_download' => $file[0]['nb_download']+1], ["id" => $args["id"]]);
     
     // Send Headers
     header('Content-Type: ' . $file[0]['content_type']);
