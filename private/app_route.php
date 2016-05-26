@@ -56,13 +56,11 @@ $app->group('/user', function () {
 		return $this->view->render($response, 'user_list.html', ['datas' => $datas]);
 	})->setName("user-list");
     
-    $this->get('/hash/{pass}', function ($request, $response, $args) {
-        return $response->getBody()->write(password_hash($args["pass"], PASSWORD_DEFAULT));
-    });
-	
 	$this->map(['GET', 'POST'], '/view/{id}', function ($request, $response, $args) {
 		if ($request->isPost()) {
-			#todo
+            $_POST['fields']['admin'] = isset($_POST['fields']['admin'])?1:0;
+            $_POST['fields']['active'] = isset($_POST['fields']['active'])?1:0;
+			$this->db->update("user", $_POST['fields'], ["id"=>$args["id"]]);
 		}
 		$datas = $this->db->select("user", "*", ['id' => $args["id"]]);
 		return $this->view->render($response, 'user_view.html', ['datas' => $datas]);
@@ -80,6 +78,7 @@ $app->group('/user', function () {
 		return $this->view->render($response, 'user_view.html', []);
 	})->setName("user-new");
       
+    # Login / Logout
 	$this->map(['GET', 'POST'], '/login', function ($request, $response) {
 		if ($request->isPost()) {
 			$args = $request->getParsedBody();
@@ -105,6 +104,11 @@ $app->group('/user', function () {
     $this->get('/logout', function ($request, $response) {
         session_destroy();
         return $response->withRedirect($this->router->pathFor('user-login'), 303);
+    });
+    
+    # Utils
+    $this->get('/hash/{pass}', function ($request, $response, $args) {
+        return $response->getBody()->write(password_hash($args["pass"], PASSWORD_DEFAULT));
     });
 });
 
