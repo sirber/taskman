@@ -17,6 +17,7 @@ Installation:
 * Pointer apache vers le répertoire public
 * Activer "AllowOverride all"
 * Vérifier le fichier de configuration (private/settings.php)
+* Donner accès écriture sur private/logs, private/cache et private/upload
 
 
 
