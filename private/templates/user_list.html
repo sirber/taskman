@@ -13,6 +13,8 @@ Usagers <a href="{{ base_url() }}/user/new" class="glyphicon glyphicon-plus"></a
             <th>Login</th>
             <th>Nom</th>
             <th>Email</th>
+            <th>Admin</th>
+            <th>Active</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -26,6 +28,8 @@ Usagers <a href="{{ base_url() }}/user/new" class="glyphicon glyphicon-plus"></a
             <td>{{ data.username }}</td>
             <td>{{ data.fullname }}</td>
             <td>{{ data.email }}</td>
+            <td>{{ data.admin?'yes':'no' }}</td>
+            <td>{{ data.active?'yes':'no' }}</td>
             <td>
                 <a href="{{ base_url() }}/user/view/{{ data.id }}"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
                 <a href="{{ base_url() }}/user/delete/{{ data.id }}"><span class="glyphicon glyphicon-trash"></span></a>

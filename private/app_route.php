@@ -52,7 +52,7 @@ $app->group('/admin', function () {
 # User / Client
 $app->group('/user', function () {
 	$this->get('/list', function ($request, $response, $args) {
-		$datas = $this->db->select("user", "*");
+		$datas = $this->db->select("user", "*", ["ORDER" => ["admin DESC", "active DESC"]]);
 		return $this->view->render($response, 'user_list.html', ['datas' => $datas]);
 	})->setName("user-list");
     
