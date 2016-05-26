@@ -22,11 +22,11 @@
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 		<div class="form-group">
 			<label for="name">Actif:</label>
-			<input type="checkbox" class="form-control" name="fields[active]" value="{{datas[0].active}}" />
+			<input type="checkbox" class="form-control" name="fields[active]" {{datas[0].active?"checked" }} />
 		</div>
 		<div class="form-group">
 			<label for="name">Admin:</label>
-			<input type="checkbox" class="form-control" name="fields[admin]" value="{{datas[0].admin}}" />
+			<input type="checkbox" class="form-control" name="fields[admin]" {{datas[0].admin?"checked" }} />
 		</div>
 	</div>
 </div>
@@ -34,9 +34,7 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<button class="btn btn-danger btn-lg" type="submit">Enregistrer</button>&nbsp;
-		<a class="btn btn-warning btn-lg" href="{{ base_url() }}/task/list">Retour</a>&nbsp;
-		<button class="btn btn-default btn-lg" type="button">Imprimer</button>&nbsp;
-		<button class="btn btn-default btn-lg" type="button">Facture</button>&nbsp;		
+		<a class="btn btn-warning btn-lg" href="{{ base_url() }}/user/list">Retour</a>&nbsp;
 	</div>
 </div>
 

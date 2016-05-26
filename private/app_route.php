@@ -65,8 +65,18 @@ $app->group('/user', function () {
 			#todo
 		}
 		$datas = $this->db->select("user", "*", ['id' => $args["id"]]);
-		return $this->view->render($response, 'user_view.html', []);
+		return $this->view->render($response, 'user_view.html', ['datas' => $datas]);
 	})->setName("user-view");
+    
+    $this->map(['GET', 'POST'], '/new', function ($request, $response, $args) {
+		if ($request->isPost()) {
+			# save
+            
+            return $response->withRedirect($this->router->pathFor('user-view', ["id" => $user_id]), 303);
+		}
+		
+		return $this->view->render($response, 'user_view.html', []);
+	})->setName("user-new");
       
 	$this->map(['GET', 'POST'], '/login', function ($request, $response) {
 		if ($request->isPost()) {

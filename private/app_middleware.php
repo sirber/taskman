@@ -6,6 +6,8 @@ use Ikimea\Browser\Browser;
 $app->add(function($request, $response, $next) {
     # Route check
     $route = trim($request->getUri()->getPath(), "/");
+    if (!$request->getAttribute('route')) 
+        return $next($request, $response);	# route not found... bad url?
     $id = $request->getAttribute('route')->getArgument('id');
 
     # File upload
