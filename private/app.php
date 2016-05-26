@@ -23,10 +23,7 @@ require_once "app_container.php";
 require_once "app_middleware.php";
 
 # Routes
-$routes = ['default', 'admin', 'user', 'task']; 
-foreach ($routes as $route) {
-	require_once ("routes/" . $route . ".php");
-}
+require_once "app_route.php";
 
 # Run!
 $app->run();
