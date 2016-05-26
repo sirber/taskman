@@ -7,8 +7,27 @@ $app->get('/', function ($request, $response) {
 $app->get('/about', function ($request, $response) {
 	return $this->view->render($response, 'about.html');
 });
-$app->get('/default_css', function ($request, $response) {
-    return $this->view->render($response->withHeader('Content-type', 'text/css'), 'default.css');    
+
+$app->get('/download/{id}', function ($request, $response, $args) {
+    // Disable Output Buffering
+    @ob_end_clean(); 
+    // IE Required
+    if(ini_get('zlib.output_compression')) {
+    	ini_set('zlib.output_compression', 'Off');
+    }
+    
+    // Fetch from DB
+    $file = $this->db->select("file", "*", ["id" => $args["id"]]);
+    
+    // Send Headers
+    header('Content-Type: ' . $file[0]['content_type']);
+    header('Content-Disposition: attachment; filename="' . $file[0]['filename'] . '"');
+    header('Content-Transfer-Encoding: binary');
+    header('Content-Length: ' . $file[0]['size']);    
+    
+    // Download    
+    echo file_get_contents(dirname(__DIR__) . "/upload/" . $args["id"]);
+    die();
 });
 
 function error_404($e, $response) {
