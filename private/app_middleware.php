@@ -28,6 +28,13 @@ $app->add(function($request, $response, $next) {
         }
 	}
     
+    # Update file description
+    if ($request->isPost()   && isset($_POST['file'])) {
+        foreach ($_POST['file'] as $id => $arr) {
+            $this->db->update('file', ['description' => $arr['description']], ['id' => $id]);
+        }        
+    }
+    
     # Load uploaded files for current route and add it to the template
     $files = $this->db->select('file', "*", ['AND' => ['route' => $route, 'active' => 1]]);
     $this->view->offsetSet('files', $files);    

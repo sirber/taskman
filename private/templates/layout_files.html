@@ -19,7 +19,6 @@
                 <td>{{ row.size }} o</td>
                 <td><input type="text" value="{{ row.description }}" name="file[{{ row.id }}][description]" class="form-control"></td>
                 <td style="vertical-align: middle;">
-                    <input type="hidden" name="file[{{ loop.index0 }}][id]" value="{{ row.id }}">
                     <a href="{{ base_url() }}/file/download/{{ row.id }}" class="btn btn-default glyphicon glyphicon glyphicon-download file_download"></a>                                
                     <a href="{{ base_url() }}/file/delete/{{ row.id }}" class="btn btn-default glyphicon glyphicon-remove-circle file_del"></a>                                
                 </td>
