@@ -166,7 +166,7 @@ $app->group('/task', function () {
         
         # Refs
         $aData["ref_category"] = $this->db->select('ref_task_category', '*', ['active'=>1]);
-        $aData['ref_user'] = $this->db->select('user', '*', ['admin'=>0]);
+        $aData['ref_user'] = $this->db->select('user', '*');
         
         return $this->view->render($response, 'task_view.html', $aData);
     })->setName('task-view');

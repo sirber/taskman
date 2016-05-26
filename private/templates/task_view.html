@@ -42,7 +42,7 @@
             <select class="form-control" name="fields[client_id]">
                 <option></option>
                 {% for user in ref_user %}
-                <option value="{{user.id}}" {% if datas[0].client_id == user.id %}selected{%endif%}>{{user.id}} - {{user.name}}</option>
+                <option value="{{user.id}}" {% if datas[0].client_id == user.id %}selected{%endif%}>{{user.id}} - {{user.fullname}}</option>
                 {% endfor %}
             </select>
 		</div>
@@ -51,7 +51,7 @@
 			<select class="form-control" name="fields[priority]">
 				<option></option>
 				<option value="1" {% if datas[0].priority == 1 %}selected{%endif%}>Bas</option>
-				<option value="2" {% if datas[0].priority == 2 %}selected{%endif%}>Moyen</option>
+				<option value="2" {% if datas[0].priority == 2 or not datas[0].priority %}selected{%endif%}>Moyen</option>
 				<option value="3" {% if datas[0].priority == 3 %}selected{%endif%}>Haut</option>
 			</select>
 		</div>
@@ -60,7 +60,7 @@
 			<select class="form-control" name="fields[difficulty]">
 				<option></option>
 				<option value="1" {% if datas[0].difficulty == 1 %}selected{%endif%}>Facile</option>
-				<option value="2" {% if datas[0].difficulty == 2 %}selected{%endif%}>Moyen</option>
+				<option value="2" {% if datas[0].difficulty == 2 or not datas[0].difficulty %}selected{%endif%}>Moyen</option>
 				<option value="3" {% if datas[0].difficulty == 3 %}selected{%endif%}>Difficile</option>
 			</select>
 		</div>

@@ -40,5 +40,19 @@
 
 {% endblock %}
 
+{% block body_extra %}
+{# Notes #}
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Notes</h3>
+			</div>
+			<textarea style="width: 100%" rows="12" name="fields[notes]">{{datas[0].notes|striptags}}</textarea>
+		</div>            
+	</div>
+</div>
+{% endblock %}
+
 {% block javascripts %}
 {% endblock %}
