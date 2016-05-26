@@ -20,18 +20,19 @@
                 <td><input type="text" value="{{ row.description }}" name="file[{{ loop.index0 }}][description]" class="form-control"></td>
                 <td style="vertical-align: middle;">
                     <input type="hidden" name="file[{{ loop.index0 }}][id]" value="{{ row.id }}">
-                    <button type="button" class="btn btn-default glyphicon glyphicon-remove-circle row_del"></span>                                
+                    <button type="button" class="btn btn-default glyphicon glyphicon glyphicon-download file_download"></span>                                
+                    <button type="button" class="btn btn-default glyphicon glyphicon-remove-circle file_del"></span>                                
                 </td>
             </tr>
             {% endfor %}
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="2"><input type="file" name="position" class="form-control"></td>
-                    <td><input type="text" name="description" class="form-control"></td>
+                    <td colspan="2"><input type="file" name="file_upload" class="form-control"></td>
+                    <td><input type="text" name="file_description" class="form-control"></td>
                     <td style="vertical-align: middle;">
-                        <button type="submit" class="btn btn-default glyphicon glyphicon-plus-sign"></button>
-                        <button type="button" class="btn btn-default glyphicon glyphicon-remove-circle row_clear"></button>                                   
+                        <button type="submit" class="btn btn-default glyphicon glyphicon glyphicon-upload file_upload"></button>
+                        <button type="button" class="btn btn-default glyphicon glyphicon-remove-circle file_clear"></button>                                   
                     </td>
                 </tr>
             </tfoot>

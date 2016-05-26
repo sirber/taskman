@@ -19,7 +19,7 @@ $app->add(function($request, $response, $next) {
                 'filename' => $file['name'],
                 'size' => $file['size'], 
                 'content_type' => $file['type'],
-                'description' => 'n/a'
+                'description' => $_POST['file_description'],
             ];
             $file_id = $this->db->insert("file", $data);
             
