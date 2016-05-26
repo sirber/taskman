@@ -7,9 +7,9 @@ $app->add(function($request, $response, $next) {
     # Route check
     $route = trim($request->getUri()->getPath(), "/");
     $id = $request->getAttribute('route')->getArgument('id');
-        
+
     # File upload
-    if (count($_FILES) && $id) {				
+    if (count($_FILES) && $_FILES["file_upload"]["tmp_name"] && $id) {				
         # Save upload
         foreach ($_FILES as $index => $file) {
             ## todo: get description from form/post
