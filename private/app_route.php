@@ -70,9 +70,11 @@ $app->group('/user', function () {
     
     $this->map(['GET', 'POST'], '/new', function ($request, $response, $args) {
 		if ($request->isPost()) {
-			# save
+            #user (new, always insert)
+			$id = $this->db->insert("user", $_POST['fields']);
+            $this->offsetSet("last_insert_id", $id);
             
-            return $response->withRedirect($this->router->pathFor('user-view', ["id" => $user_id]), 303);
+            return $response->withRedirect($this->router->pathFor('user-view', ["id" => $id]), 303);
 		}
 		
 		return $this->view->render($response, 'user_view.html', []);
