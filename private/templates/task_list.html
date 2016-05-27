@@ -23,7 +23,7 @@ Tâches <a href="{{ base_url() }}/task/new" class="glyphicon glyphicon-plus"></a
             <td>
                 <input type="checkbox">
             </td>
-            <td>{{ data.name }}</td>
+            <td><a href="{{ base_url() }}/task/view/{{ data.id }}">{{ data.name }}</a></td>
             <td>{{ data.date_start }}</td>
             <td>{{ data.date_end }}</td>
             <td>{{ data.priority }}</td>

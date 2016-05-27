@@ -25,7 +25,7 @@ Usagers <a href="{{ base_url() }}/user/new" class="glyphicon glyphicon-plus"></a
                 <input type="checkbox">
             </td>
             <td>{{ data.id }}</td>
-            <td>{{ data.username }}</td>
+            <td><a href="{{ base_url() }}/user/view/{{ data.id }}">{{ data.username }}</a></td>
             <td>{{ data.fullname }}</td>
             <td>{{ data.email }}</td>
             <td>{{ data.admin?'yes':'no' }}</td>
