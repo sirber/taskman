@@ -66,6 +66,13 @@ $app->group('/user', function () {
 		return $this->view->render($response, 'user_view.html', ['datas' => $datas]);
 	})->setName("user-view");
     
+    $this->get('/delete/{id}', function ($request, $response, $args) {
+        if ($_SESSION["admin"]) {
+            $this->db->update('user', ['active' => 0], ["id" => $args["id"]]);    
+        }        
+        return $response->withRedirect($_SERVER['HTTP_REFERER'], 303);
+    })->setName("user-delete");
+    
     $this->map(['GET', 'POST'], '/new', function ($request, $response, $args) {
 		if ($request->isPost()) {
             #user (new, always insert)
