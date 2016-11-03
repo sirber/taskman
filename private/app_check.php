@@ -5,6 +5,9 @@ if (!defined("FROM_PUBLIC")) {
 if (!is_writable(__DIR__ . "/logs/")) {
 	die("fatal error: folder private/logs is not writable");
 }
+if (!file_exists(__DIR__ . "/upload/")) {
+    mkdir(__DIR__ . "/upload/");
+}
 if (!is_writable(__DIR__ . "/upload/")) {
 	die("fatal error: folder private/upload is not writable");
 }
