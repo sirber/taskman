@@ -1,5 +1,7 @@
-/vendor/
-composer.lock
-public/debug.php
+vendor/
 private/settings.php
-*.txt
+private/logs/
+private/cache/
+private/upload/
+.orig
+composer.lock

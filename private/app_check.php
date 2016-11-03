@@ -9,5 +9,5 @@ if (!is_writable(__DIR__ . "/upload/")) {
 	die("fatal error: folder private/upload is not writable");
 }
 if (!is_file(__DIR__ . "/settings.php")) {
-	die("fatal error: settings.php not found");
+	die("fatal error: settings.php not found. please configure the app!");
 }
