@@ -8,6 +8,7 @@ return [
 	],
     	
 	'database' => [
+		/* MySQL */	
 		// required
 		'database_type' => 'mysql',
 		'database_name' => 'app_stylorouge',
@@ -18,14 +19,24 @@ return [
 	 
 		// [optional]
 		'port' => 3306,
+		
+		/* SQLite */
+		/*'database_type' => 'sqlite',
+		'database_file' => 'my/database/path/database.db'*/
 	 
+		/* Other */		
 		// [optional] Table prefix
 		'prefix' => '',
 	 
 		// driver_option for connection, read more from http://www.php.net/manual/en/pdo.setattribute.php
 		'option' => [
 			PDO::ATTR_CASE => PDO::CASE_NATURAL
-		]
+		],
+		
+		// [optional] Medoo will execute those commands after connected to the database for initialization
+		/*'command' => [
+			'SET SQL_MODE=ANSI_QUOTES'
+		]*/
 	],
 	
 	'settings' => [
