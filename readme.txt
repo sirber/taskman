@@ -1,4 +1,4 @@
-WebApp StyloRouge
+TaakMan
 (c) Stépahne Bérubé <sirber@hotmail.com>
 
 Basé sur: 
@@ -14,12 +14,10 @@ Répertoires:
 
 Installation:
 * # composer install
-* Pointer apache vers le répertoire public
+* Pointer apache vers le répertoire /public
 * Activer "AllowOverride all"
-* Vérifier le fichier de configuration (private/settings.php)
+* Créer le fichier de configuration (private/settings.php)
 * Donner accès écriture sur private/logs et private/upload
-
-
 
 #######
 Todo
